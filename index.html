@@ -73,7 +73,7 @@
     .hidden { display: none !important; }
 
     /* ========================================================================
-       2. INSTANT ANIMATED PROCESSING OVERLAY (VISIBLE FEEDBACK ON EVERY TAP)
+       2. INSTANT ANIMATED PROCESSING OVERLAY
        ======================================================================== */
     #actionLoader {
       position: fixed;
@@ -538,7 +538,7 @@
     </nav>
   </div>
   <!-- ======================================================================
-       PART 2: HIGH-SPEED CLIENT ENGINE, HORIZONTAL JPG EXPORT & ANALYTICS
+       CHUNK 3 OF 3: HIGH-SPEED CLIENT ENGINE, SENIORITY JPG & DIRECT BYPASS
        ====================================================================== -->
   <style>
     .seg-bar {
@@ -773,7 +773,7 @@
        ======================================================================== */
     const API_URL = "https://script.google.com/macros/s/AKfycbx0fcMrCzWFfxXss4GnLWejfe51ZBBX-AhSDinq1RXdt87pRdN3t13wNKZrOvPyGNCsKw/exec";
 
-    let ALLOC_CACHE = {}; // Instant memory cache per date for 0ms switching!
+    let ALLOC_CACHE = {};
     let STATE = {
       user: null,
       employees: [],
@@ -911,7 +911,7 @@
 
       renderHeaderAndProfile();
       renderNoticeBoard();
-      renderOTBoardView();
+      renderOTBoardView(false);
       renderWatchExtensionHeatmap();
       renderCalendarOpsView();
       renderCommandAdminView();
@@ -1076,7 +1076,7 @@
     }
 
     /* ========================================================================
-       TAB 1: 15-SLOT OT BOARD, FAST DATE SWITCH & HORIZONTAL WHATSAPP JPG
+       TAB 1: 15-SLOT OT BOARD, FAST DATE SWITCH & SENIORITY WHATSAPP JPG
        ======================================================================== */
     function mountTabOTBoardHTML() {
       document.getElementById('tabOTBoard').innerHTML = `
@@ -1187,23 +1187,27 @@
       });
     }
 
-    /* Ultra-fast date switching using local cache + lightweight getAllocation endpoint */
     async function changeBoardDate(newDate) {
       STATE.selectedDate = newDate;
       if (ALLOC_CACHE[newDate]) {
         STATE.allocation = ALLOC_CACHE[newDate];
-        renderOTBoardView();
+        renderOTBoardView(false);
         return;
       }
       const res = await callApi({ action: 'getAllocation', dateStr: newDate }, `Loading Roster for ${newDate}...`);
       if (res && res.success && res.allocation) {
         ALLOC_CACHE[newDate] = res.allocation;
         STATE.allocation = res.allocation;
-        renderOTBoardView();
+        renderOTBoardView(false);
       }
     }
 
-    function renderOTBoardView() {
+    /**
+     * Renders the 15-Slot Board.
+     * When sortBySeniorityForJpg === true, merges regular + OT crew in each shift and sorts strictly
+     * by official Seniority (SL_No) so R Suresh, Rajkumar A R, K Suresh, etc. appear in exact seniority order!
+     */
+    function renderOTBoardView(sortBySeniorityForJpg = false) {
       const alloc = STATE.allocation;
       if (!alloc) return;
 
@@ -1236,12 +1240,12 @@
       document.getElementById('sheetDateHeading').innerText = `DATE: ${alloc.displayDate}`;
 
       document.getElementById('metaShiftA').innerText = `${Math.min(15, alloc.shiftA.regular.length + alloc.shiftA.otSelected.length)}/15`;
-      document.getElementById('tbodyShiftA').innerHTML = build15SlotRows(alloc.shiftA.regular, alloc.shiftA.otSelected, 'A', false);
-	  document.getElementById('standbyShiftA').innerHTML = renderShortPills(alloc.shiftA.standby, false, 'A');
+      document.getElementById('tbodyShiftA').innerHTML = build15SlotRows(alloc.shiftA.regular, alloc.shiftA.otSelected, 'A', false, sortBySeniorityForJpg);
+      document.getElementById('standbyShiftA').innerHTML = renderShortPills(alloc.shiftA.standby, false, 'A');
       document.getElementById('nwShiftA').innerHTML = renderShortPills(alloc.shiftA.notWilling, true, 'A');
 
       document.getElementById('metaShiftB').innerText = `${Math.min(15, alloc.shiftB.regular.length + alloc.shiftB.otSelected.length)}/15`;
-      document.getElementById('tbodyShiftB').innerHTML = build15SlotRows(alloc.shiftB.regular, alloc.shiftB.otSelected, 'B', isWatchExt);
+      document.getElementById('tbodyShiftB').innerHTML = build15SlotRows(alloc.shiftB.regular, alloc.shiftB.otSelected, 'B', isWatchExt, sortBySeniorityForJpg);
       document.getElementById('standbyShiftB').innerHTML = renderShortPills(alloc.shiftB.standby, false, 'B');
       document.getElementById('nwShiftB').innerHTML = renderShortPills(alloc.shiftB.notWilling, true, 'B');
 
@@ -1263,11 +1267,17 @@
       `).join('');
     }
 
-    function build15SlotRows(regularList, otSelectedList, targetShift, isWatchExt) {
-      const combined = [
+    function build15SlotRows(regularList, otSelectedList, targetShift, isWatchExt, sortBySeniority = false) {
+      let combined = [
         ...regularList.map(p => ({ ...p, isOT: false })),
         ...otSelectedList.map(p => ({ ...p, isOT: true }))
       ];
+
+      // When generating WhatsApp JPG, reorder all 15 slots strictly by Seniority (SL_No)!
+      if (sortBySeniority) {
+        combined.sort((a, b) => a.slNo - b.slNo);
+      }
+
       let html = '';
       for (let slot = 1; slot <= 15; slot++) {
         const p = combined[slot - 1];
@@ -1368,10 +1378,16 @@
       });
     }
 
-    /* Forces Horizontal Two-Column Desktop Layout (1080px) even on Mobile Screens */
+    /**
+     * Generates a 1080px Horizontal Two-Column WhatsApp JPEG with both Shift A and Shift B
+     * reordered strictly by Seniority (SL_No) so R Suresh, Rajkumar A R, K Suresh, etc. appear in order!
+     */
     function downloadWhatsAppJPG() {
       const el = document.getElementById('whatsappSheetCapture');
-      showLoader('Rendering Horizontal WhatsApp JPG...');
+      showLoader('Sorting Seniority & Rendering WhatsApp JPG...');
+
+      // Temporarily render both columns sorted by Seniority & lock horizontal 1080px width
+      renderOTBoardView(true);
       el.classList.add('force-horizontal');
 
       setTimeout(() => {
@@ -1383,18 +1399,20 @@
           useCORS: true
         }).then(canvas => {
           el.classList.remove('force-horizontal');
+          renderOTBoardView(false); // Restore interactive OT view
           hideLoader();
           const link = document.createElement('a');
           link.download = `AAI_Tirupati_ARFF_OT_${STATE.selectedDate}.jpg`;
           link.href = canvas.toDataURL('image/jpeg', 0.95);
           link.click();
-          showToast('Horizontal WhatsApp JPG downloaded!', 'success');
+          showToast('Seniority-ordered Horizontal WhatsApp JPG downloaded!', 'success');
         }).catch(err => {
           el.classList.remove('force-horizontal');
+          renderOTBoardView(false);
           hideLoader();
           showToast('JPG Export Error: ' + err.message, 'error');
         });
-      }, 120);
+      }, 150);
     }
 
     /* ========================================================================
@@ -1444,7 +1462,7 @@
     }
 
     /* ========================================================================
-       TAB 2: INDIVIDUAL CALENDAR, EXCHANGES (PARTNER-ONLY) & CANCEL/REVERT
+       TAB 2: INDIVIDUAL CALENDAR, EXCHANGES, DIRECT BYPASS & CANCEL/REVERT
        ======================================================================== */
     function renderCalendarOpsView() {
       const container = document.getElementById('tabCalendarOps');
@@ -1452,10 +1470,39 @@
 
       const dates = STATE.allocation.allDates || [];
       const dateOpts = dates.map(d => `<option value="${d}">${d}</option>`).join('');
+      const allCrewOpts = (STATE.employees || [])
+        .filter(e => e.slNo > 0)
+        .map(e => `<option value="${e.empId}">${e.slNo}. ${e.name} (${e.designation})</option>`)
+        .join('');
       const partnerOpts = (STATE.employees || [])
         .filter(e => e.slNo > 0 && e.empId !== STATE.user.empId)
         .map(e => `<option value="${e.empId}">${e.name} (${e.designation})</option>`)
         .join('');
+
+      const authBypassCard = isAuthorityUser() ? `
+        <div class="glass-card" style="border:1.5px solid rgba(79,70,229,0.35);background:linear-gradient(135deg, rgba(79,70,229,0.08), rgba(14,165,233,0.08));">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <h3 style="font-size:14.5px;font-weight:800;color:var(--accent-indigo);">⚡ Direct Authority Exchange Bypass (Admin / Incharge / HoD)</h3>
+            <span class="glass-pill" style="color:var(--accent-indigo);">Instant Swap</span>
+          </div>
+          <p style="font-size:11.5px;color:var(--text-secondary);margin-bottom:10px;">
+            Directly swap Shift or Week-Off between any two crew members without an employee request or partner approval.
+          </p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:9px;">
+            <select id="dirSubType" class="glass-select">
+              <option value="SHIFT_EXCHANGE">Direct Shift Exchange (OT Ineligible)</option>
+              <option value="WO_EXCHANGE">Direct Week-Off Exchange (OT Eligible)</option>
+            </select>
+            <select id="dirDate" class="glass-select tabular">${dateOpts}</select>
+            <select id="dirEmp1" class="glass-select">${allCrewOpts}</select>
+            <select id="dirEmp2" class="glass-select">${allCrewOpts}</select>
+          </div>
+          <div style="display:flex;gap:9px;margin-top:9px;flex-wrap:wrap;">
+            <input type="text" id="dirRemarks" class="glass-input" style="flex:1;min-width:180px;" placeholder="Operational Reason / Order Ref (Optional)" />
+            <button class="btn-glass btn-primary" onclick="submitDirectAuthorityExchange('dir')">Execute Direct Exchange</button>
+          </div>
+        </div>
+      ` : '';
 
       container.innerHTML = `
         <div class="glass-card">
@@ -1490,11 +1537,13 @@
           </div>
         </div>
 
+        ${authBypassCard}
+
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;">
           <div class="glass-card">
             <h3 style="font-size:14.5px;font-weight:800;margin-bottom:4px;">🔄 Mutual Shift / Week-Off Exchange</h3>
             <p style="font-size:11.5px;color:var(--text-secondary);margin-bottom:10px;">
-              Activates immediately upon <strong>Partner Approval</strong> (no HOD/Incharge approval needed). Shift exchange makes both ineligible for OT.
+              Activates immediately upon <strong>Partner Approval</strong>. Shift exchange makes both ineligible for OT.
             </p>
             <div style="display:flex;flex-direction:column;gap:9px;">
               <select id="swapSubType" class="glass-select">
@@ -1532,7 +1581,6 @@
           </div>
         </div>
 
-        <!-- RECENT EXCHANGES & PRINTABLE LEAVE REGISTRY -->
         <div class="glass-card" id="printableLeaveSection">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
             <div>
@@ -1559,7 +1607,6 @@
         const isLeaveAuthPending = !isExchange && isAuthorityUser() && r.inchargeStatus === 'PENDING' && r.finalStatus === 'PENDING';
         const showApproveReject = isPartnerPending || isLeaveAuthPending;
 
-        // Allow Cancel & Revert if APPROVED and user is requester, partner, or Authority
         const canCancelRevert = r.finalStatus === 'APPROVED' && (
           r.requesterId === STATE.user.empId || r.partnerId === STATE.user.empId || isAuthorityUser()
         );
@@ -1583,6 +1630,7 @@
               <span class="tabular">📅 ${r.dateFrom}${r.dateTo !== r.dateFrom ? ' → ' + r.dateTo : ''}</span>
               <span>${isExchange ? `Partner: <strong>${r.partnerStatus}</strong>` : `Authority: <strong>${r.inchargeStatus}</strong>`} • ${r.createdAt}</span>
             </div>
+            ${r.remarks ? `<div style="font-size:11px;color:var(--text-muted);">Note: ${r.remarks}</div>` : ''}
 
             ${showApproveReject ? `
               <div class="no-print" style="display:flex;gap:8px;margin-top:4px;">
@@ -1601,6 +1649,43 @@
           </div>
         `;
       }).join('');
+    }
+
+    async function submitDirectAuthorityExchange(prefix) {
+      const subType = document.getElementById(`${prefix}SubType`).value;
+      const dateStr = document.getElementById(`${prefix}Date`).value;
+      const emp1Id = document.getElementById(`${prefix}Emp1`).value;
+      const emp2Id = document.getElementById(`${prefix}Emp2`).value;
+      const remarks = document.getElementById(`${prefix}Remarks`).value.trim();
+
+      if (emp1Id === emp2Id) return showToast('Select two different employees to exchange.', 'error');
+
+      const emp1 = STATE.employees.find(e => e.empId === emp1Id);
+      const emp2 = STATE.employees.find(e => e.empId === emp2Id);
+
+      openConfirmModal(
+        'Confirm Direct Authority Exchange',
+        `Directly swap ${subType.replace('_', ' ')} between ${emp1.name} and ${emp2.name} on ${dateStr}? Roster updates immediately.`,
+        async () => {
+          const res = await callApi({
+            action: 'directAuthorityExchange',
+            actorRole: STATE.user.role,
+            actorName: STATE.user.name,
+            subType,
+            dateStr,
+            emp1Id,
+            emp2Id,
+            remarks
+          }, 'Executing Direct Shift/WO Exchange...');
+          if (res && res.success) {
+            ALLOC_CACHE = {};
+            showToast(res.message, 'success');
+            await loadBootstrap(STATE.selectedDate, false);
+          } else {
+            showToast((res && res.message) || 'Direct exchange failed.', 'error');
+          }
+        }
+      );
     }
 
     async function submitExchangeForm() {
@@ -1678,7 +1763,7 @@
     }
 
     /* ========================================================================
-       TAB 4: ADMIN, INCHARGE & HOD COMMAND ANALYTICS + MANAGEMENT CONSOLE
+       TAB 4: ADMIN, INCHARGE & HOD COMMAND ANALYTICS + DIRECT EXCHANGE PANEL
        ======================================================================== */
     function renderCommandAdminView() {
       const container = document.getElementById('tabCommandAdmin');
@@ -1688,6 +1773,9 @@
       const lt = STATE.analytics.leaveTypes;
       const maxLeaveVal = Math.max(1, ...Object.values(lt));
       const crewOnly = (STATE.employees || []).filter(e => e.slNo > 0);
+      const dates = (STATE.allocation && STATE.allocation.allDates) || [];
+      const dateOpts = dates.map(d => `<option value="${d}">${d}</option>`).join('');
+      const allCrewOpts = crewOnly.map(e => `<option value="${e.empId}">${e.slNo}. ${e.name} (${e.designation})</option>`).join('');
 
       container.innerHTML = `
         <div class="kpi-grid-4">
@@ -1695,6 +1783,27 @@
           ${buildRingKpi('Shift B Strength', `${tc.B}/15`, Math.min(100, Math.round((tc.B / 15) * 100)), '#7C3AED')}
           ${buildRingKpi('OT Slots Filled', `${tc.OT}`, Math.min(100, tc.OT * 15), '#F59E0B')}
           ${buildRingKpi('Off / On Leave', `${tc.O + tc.LEAVE}`, Math.min(100, Math.round(((tc.O + tc.LEAVE) / 29) * 100)), '#059669')}
+        </div>
+
+        <!-- DIRECT AUTHORITY EXCHANGE BYPASS IN COMMAND CONSOLE -->
+        <div class="glass-card" style="border:1.5px solid rgba(79,70,229,0.35);">
+          <h3 style="font-size:14.5px;font-weight:800;margin-bottom:4px;color:var(--accent-indigo);">⚡ Direct Shift / Week-Off Exchange (Authority Bypass)</h3>
+          <p style="font-size:11.5px;color:var(--text-secondary);margin-bottom:10px;">
+            Execute an instant Shift or Week-Off swap between any two fire officials without employee request.
+          </p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:8px;">
+            <select id="cmdDirSubType" class="glass-select">
+              <option value="SHIFT_EXCHANGE">Shift Exchange (OT Ineligible)</option>
+              <option value="WO_EXCHANGE">Week-Off Exchange (OT Eligible)</option>
+            </select>
+            <select id="cmdDirDate" class="glass-select tabular">${dateOpts}</select>
+            <select id="cmdDirEmp1" class="glass-select">${allCrewOpts}</select>
+            <select id="cmdDirEmp2" class="glass-select">${allCrewOpts}</select>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+            <input type="text" id="cmdDirRemarks" class="glass-input" style="flex:1;min-width:180px;" placeholder="Remarks / Order Ref (Optional)" />
+            <button class="btn-glass btn-primary" onclick="submitDirectAuthorityExchange('cmdDir')">Execute Direct Swap</button>
+          </div>
         </div>
 
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;">
@@ -1829,3 +1938,4 @@
   </script>
 </body>
 </html>
+  
