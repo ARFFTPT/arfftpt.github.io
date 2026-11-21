@@ -1237,13 +1237,13 @@
 
       document.getElementById('metaShiftA').innerText = `${Math.min(15, alloc.shiftA.regular.length + alloc.shiftA.otSelected.length)}/15`;
       document.getElementById('tbodyShiftA').innerHTML = build15SlotRows(alloc.shiftA.regular, alloc.shiftA.otSelected, 'A', false);
-      document.getElementById('standbyShiftA').innerHTML = renderShortPills(alloc.shiftA.standby, false);
-      document.getElementById('nwShiftA').innerHTML = renderShortPills(alloc.shiftA.notWilling, true);
+	  document.getElementById('standbyShiftA').innerHTML = renderShortPills(alloc.shiftA.standby, false, 'A');
+      document.getElementById('nwShiftA').innerHTML = renderShortPills(alloc.shiftA.notWilling, true, 'A');
 
       document.getElementById('metaShiftB').innerText = `${Math.min(15, alloc.shiftB.regular.length + alloc.shiftB.otSelected.length)}/15`;
       document.getElementById('tbodyShiftB').innerHTML = build15SlotRows(alloc.shiftB.regular, alloc.shiftB.otSelected, 'B', isWatchExt);
-      document.getElementById('standbyShiftB').innerHTML = renderShortPills(alloc.shiftB.standby, false);
-      document.getElementById('nwShiftB').innerHTML = renderShortPills(alloc.shiftB.notWilling, true);
+      document.getElementById('standbyShiftB').innerHTML = renderShortPills(alloc.shiftB.standby, false, 'B');
+      document.getElementById('nwShiftB').innerHTML = renderShortPills(alloc.shiftB.notWilling, true, 'B');
 
       document.getElementById('sheetOffList').innerText = alloc.offOrLeave.length
         ? alloc.offOrLeave.map(p => `${p.shortName} (${p.dutyCode})`).join(', ')
@@ -1311,14 +1311,18 @@
       return html;
     }
 
-    function renderShortPills(list, isNotWilling) {
+    function renderShortPills(list, isNotWilling, targetShift) {
       if (!list || list.length === 0) return `<span style="color:#64748B;">None</span>`;
       return list.map(p => {
         if (isNotWilling) {
           const badge = p.dummyApplied === 'YES'
             ? `<span class="red-plus-one">+1</span>`
             : `<span style="color:#059669;font-size:10px;font-weight:800;">EXEMPT</span>`;
-          return `<span class="short-pill">${p.shortName} ${badge}</span>`;
+          const canRevert = (p.empId === STATE.user.empId || isAuthorityUser());
+          const revertBtn = canRevert
+            ? `<button data-html2canvas-ignore="true" title="Change back to Willing" onclick="handleOTToggle('${targetShift}','${p.empId}','WILLING')" style="margin-left:4px;border:none;background:#DCFCE7;color:#15803D;border-radius:6px;padding:1px 6px;font-size:10px;font-weight:800;cursor:pointer;">↺ ✓</button>`
+            : '';
+          return `<span class="short-pill">${p.shortName} ${badge}${revertBtn}</span>`;
         }
         return `<span class="short-pill">${p.shortName} (${p.effectiveOt})</span>`;
       }).join('');
