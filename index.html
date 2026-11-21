@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#3B82F6" />
+  <title>AAI Tirupati ARFF • Watch & OT Command</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    /* ========================================================================
+       1. ULTRA-GLOSSY AURORA GLASSMORPHISM DESIGN SYSTEM
+       ======================================================================== */
+    :root {
+      --bg-gradient: linear-gradient(135deg, #DBEAFE 0%, #E0E7FF 30%, #FCE7F3 68%, #FEF3C7 100%);
+      --glass-surface: rgba(255, 255, 255, 0.68);
+      --glass-elevated: rgba(255, 255, 255, 0.86);
+      --glass-border: rgba(255, 255, 255, 0.85);
+      --glass-specular: inset 0 1.5px 1px rgba(255, 255, 255, 0.95), 0 16px 36px -6px rgba(30, 58, 138, 0.14);
+      --text-primary: #0F172A;
+      --text-secondary: #334155;
+      --text-muted: #64748B;
+      --input-bg: rgba(255, 255, 255, 0.72);
+      --input-border: rgba(148, 163, 184, 0.42);
+
+      --accent-indigo: #4F46E5;
+      --accent-blue: #2563EB;
+      --accent-cyan: #0284C7;
+      --accent-violet: #7C3AED;
+      --accent-emerald: #059669;
+      --accent-amber: #D97706;
+      --accent-rose: #E11D48;
+
+      --grad-primary: linear-gradient(135deg, #2563EB 0%, #4F46E5 50%, #7C3AED 100%);
+      --grad-fire: linear-gradient(135deg, #E11D48 0%, #EA580C 52%, #F59E0B 100%);
+      --grad-emerald: linear-gradient(135deg, #059669 0%, #10B981 55%, #34D399 100%);
+      --grad-gloss-shine: linear-gradient(180deg, rgba(255,255,255,0.42) 0%, rgba(255,255,255,0.0) 55%);
+    }
+
+    [data-theme="dark"] {
+      --bg-gradient: radial-gradient(circle at 15% 15%, #1E1B4B 0%, #0F172A 45%, #1E1024 85%, #090D16 100%);
+      --glass-surface: rgba(22, 28, 46, 0.66);
+      --glass-elevated: rgba(30, 38, 62, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.16);
+      --glass-specular: inset 0 1px 1px rgba(255, 255, 255, 0.22), 0 20px 44px -8px rgba(0, 0, 0, 0.65);
+      --text-primary: #F8FAFC;
+      --text-secondary: #CBD5E1;
+      --text-muted: #94A3B8;
+      --input-bg: rgba(15, 23, 42, 0.68);
+      --input-border: rgba(255, 255, 255, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding-bottom: 98px;
+      overflow-x: hidden;
+    }
+
+    .tabular { font-variant-numeric: tabular-nums; font-family: 'JetBrains Mono', monospace; }
+    .hidden { display: none !important; }
+
+    /* ========================================================================
+       2. INSTANT ANIMATED PROCESSING OVERLAY (VISIBLE FEEDBACK ON EVERY TAP)
+       ======================================================================== */
+    #actionLoader {
+      position: fixed;
+      inset: 0;
+      z-index: 9995;
+      background: rgba(15, 23, 42, 0.35);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeInFast 0.15s ease-out;
+    }
+    .loader-pill {
+      background: var(--glass-elevated);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-specular);
+      padding: 16px 24px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13.5px;
+      font-weight: 800;
+    }
+    .spin-ring {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 3px solid rgba(79, 70, 229, 0.22);
+      border-top-color: #4F46E5;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes fadeInFast { from { opacity: 0; } to { opacity: 1; } }
+
+    /* ========================================================================
+       3. ANIMATED SPLASH SCREEN
+       ======================================================================== */
+    #splashScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 48%, #4C1D95 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      transition: opacity 0.45s ease, visibility 0.45s;
+    }
+    #splashScreen.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
+
+    .radar-ring {
+      position: relative;
+      width: 88px;
+      height: 88px;
+      border-radius: 26px;
+      background: var(--grad-primary);
+      box-shadow: inset 0 2px 2px rgba(255,255,255,0.5), 0 0 40px rgba(79, 70, 229, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .radar-ring::before {
+      content: '';
+      position: absolute;
+      inset: -12px;
+      border-radius: 34px;
+      border: 2px solid rgba(96, 165, 250, 0.55);
+      animation: pulseWave 1.6s infinite;
+    }
+    @keyframes pulseWave {
+      0% { transform: scale(0.9); opacity: 0.9; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+
+    /* ========================================================================
+       4. GLOSSY GLASS CARDS & SHINY PILL BUTTONS
+       ======================================================================== */
+    .glass-card {
+      position: relative;
+      background: var(--glass-surface);
+      backdrop-filter: blur(22px) saturate(160%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      box-shadow: var(--glass-specular);
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .glass-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+    }
+
+    .btn-glass {
+      position: relative;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 11px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.35);
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: transform 0.14s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+      user-select: none;
+    }
+    .btn-glass::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--grad-gloss-shine);
+      pointer-events: none;
+    }
+    .btn-glass:active { transform: scale(0.94); }
+    .btn-primary { background: var(--grad-primary); color: #fff; box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.48); }
+    .btn-fire    { background: var(--grad-fire);    color: #fff; box-shadow: 0 8px 20px -4px rgba(225, 29, 72, 0.45); }
+    .btn-emerald { background: var(--grad-emerald); color: #fff; box-shadow: 0 8px 18px -4px rgba(5, 150, 105, 0.42); }
+    .btn-soft    { background: var(--input-bg); color: var(--text-primary); border: 1px solid var(--input-border); }
+
+    .glass-input, .glass-select {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.05);
+      color: var(--text-primary);
+      font-size: 13.5px;
+      font-weight: 600;
+      outline: none;
+    }
+    .glass-input:focus, .glass-select:focus {
+      border-color: var(--accent-indigo);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+    }
+
+    /* ========================================================================
+       5. GLOSSY LOGIN & FLOATING DOCK
+       ======================================================================== */
+    .login-stage { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .login-glass-box {
+      width: 100%; max-width: 400px;
+      background: var(--glass-elevated);
+      backdrop-filter: blur(26px) saturate(170%);
+      -webkit-backdrop-filter: blur(26px) saturate(170%);
+      border: 1px solid var(--glass-border);
+      border-radius: 30px;
+      padding: 30px 24px;
+      box-shadow: var(--glass-specular);
+    }
+    .pin-keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+    .key-btn {
+      padding: 14px; border-radius: 16px; border: 1px solid var(--input-border);
+      background: var(--input-bg); box-shadow: inset 0 1px 0 rgba(255,255,255,0.65);
+      color: var(--text-primary); font-size: 18px; font-weight: 800;
+      font-family: 'JetBrains Mono', monospace; cursor: pointer;
+    }
+    .key-btn:active { transform: scale(0.92); background: rgba(79, 70, 229, 0.18); }
+
+    .top-glass-bar {
+      position: sticky; top: 10px; z-index: 90;
+      max-width: 1140px; margin: 10px auto 16px; padding: 10px 16px;
+      border-radius: 22px; background: var(--glass-elevated);
+      backdrop-filter: blur(24px) saturate(170%); -webkit-backdrop-filter: blur(24px) saturate(170%);
+      border: 1px solid var(--glass-border); box-shadow: var(--glass-specular);
+      display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    }
+    .app-shell { max-width: 1140px; margin: 0 auto; padding: 0 14px; }
+
+    .floating-dock {
+      position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); z-index: 150;
+      width: calc(100% - 24px); max-width: 600px;
+      background: var(--glass-elevated);
+      backdrop-filter: blur(26px) saturate(180%); -webkit-backdrop-filter: blur(26px) saturate(180%);
+      border: 1px solid var(--glass-border); border-radius: 26px; padding: 7px 8px;
+      box-shadow: var(--glass-specular);
+      display: flex; justify-content: space-around; align-items: center;
+    }
+    .dock-item {
+      background: none; border: none; color: var(--text-secondary);
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      padding: 7px 12px; border-radius: 18px; font-size: 10.5px; font-weight: 700;
+      cursor: pointer; transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .dock-item svg { width: 20px; height: 20px; }
+    .dock-item.active {
+      color: #fff; background: var(--grad-primary);
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.5), 0 6px 16px -3px rgba(37, 99, 235, 0.5);
+      transform: translateY(-2px);
+    }
+
+    /* Toasts & Modals */
+    #toastStack {
+      position: fixed; top: 18px; left: 18px; right: 18px; z-index: 9998;
+      display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none;
+    }
+    .glass-toast {
+      pointer-events: auto; max-width: 420px; width: 100%; padding: 13px 16px; border-radius: 18px;
+      background: var(--glass-elevated); backdrop-filter: blur(24px); border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-specular); display: flex; align-items: center; gap: 10px;
+      font-size: 13px; font-weight: 700;
+    }
+    .glass-modal-backdrop {
+      position: fixed; inset: 0; z-index: 9000; background: rgba(9, 12, 20, 0.58);
+      backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 18px;
+    }
+    .glass-modal-card {
+      width: 100%; max-width: 420px; background: var(--glass-elevated);
+      border: 1px solid var(--glass-border); border-radius: 26px; padding: 22px;
+      box-shadow: var(--glass-specular);
+    }
+
+    /* Notice & DL Cards */
+    .notice-item {
+      padding: 14px; border-radius: 18px; background: var(--input-bg);
+      border: 1px solid var(--input-border); border-left: 4px solid var(--accent-indigo); margin-bottom: 10px;
+    }
+    .notice-item.HIGH { border-left-color: var(--accent-amber); }
+    .notice-item.URGENT { border-left-color: var(--accent-rose); background: rgba(225, 29, 72, 0.08); }
+    .dl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-top: 12px; }
+    .dl-card { padding: 14px; border-radius: 18px; background: var(--input-bg); border: 1px solid var(--input-border); }
+    .badge-valid { background: rgba(16, 185, 129, 0.16); color: #059669; }
+    .badge-warn  { background: rgba(245, 158, 11, 0.18); color: #D97706; }
+    .badge-exp   { background: rgba(239, 68, 68, 0.18); color: #DC2626; }
+
+    /* Print Leave Registry Only */
+    @media print {
+      body * { visibility: hidden; }
+      #printableLeaveSection, #printableLeaveSection * { visibility: visible; }
+      #printableLeaveSection { position: absolute; left: 0; top: 0; width: 100%; background: #fff !important; color: #000 !important; box-shadow: none !important; }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ANIMATED SPLASH SCREEN -->
+  <div id="splashScreen">
+    <div class="radar-ring">
+      <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/><path d="M12 8v4l3 3"/></svg>
+    </div>
+    <div style="margin-top:20px;font-size:18px;font-weight:800;letter-spacing:0.6px;">AAI TIRUPATI ARFF</div>
+    <div style="font-size:12px;color:#93C5FD;font-weight:600;margin-top:4px;">WATCH COMMAND • OT & ROSTER ENGINE</div>
+  </div>
+
+  <!-- INSTANT PROCESSING SPINNER OVERLAY -->
+  <div id="actionLoader" class="hidden">
+    <div class="loader-pill">
+      <div class="spin-ring"></div>
+      <span id="actionLoaderText">Syncing ARFF Watch Data...</span>
+    </div>
+  </div>
+
+  <!-- TOAST STACK & CONFIRM MODAL -->
+  <div id="toastStack"></div>
+  <div id="customModal" class="glass-modal-backdrop hidden">
+    <div class="glass-modal-card">
+      <h3 id="modalTitle" style="font-size:16px;font-weight:800;margin-bottom:8px;">Confirm Action</h3>
+      <p id="modalBody" style="font-size:13px;color:var(--text-secondary);line-height:1.5;"></p>
+      <div style="display:flex;gap:10px;margin-top:18px;">
+        <button class="btn-glass btn-soft" style="flex:1;" onclick="closeCustomModal()">Cancel</button>
+        <button id="modalConfirmBtn" class="btn-glass btn-primary" style="flex:1;">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GLASS LOGIN SCREEN -->
+  <section id="loginView" class="login-stage">
+    <div class="login-glass-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+        <span class="glass-pill" style="color:var(--accent-indigo);">VOTP • CAT-7 ARFF</span>
+        <button class="btn-glass btn-soft" style="padding:6px 10px;border-radius:12px;" onclick="toggleTheme()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+
+      <h1 style="font-size:22px;font-weight:800;">Fire Official Sign-In</h1>
+      <p style="font-size:12.5px;color:var(--text-secondary);margin-top:4px;">Enter Employee ID or Security PIN</p>
+
+      <div style="margin-top:16px;">
+        <input type="password" id="credentialInput" class="glass-input tabular" style="font-size:18px;text-align:center;letter-spacing:3px;padding:13px;" placeholder="••••••" onkeyup="if(event.key==='Enter') executeLogin()" />
+      </div>
+
+      <div class="pin-keypad">
+        <button class="key-btn" onclick="appendPin('1')">1</button>
+        <button class="key-btn" onclick="appendPin('2')">2</button>
+        <button class="key-btn" onclick="appendPin('3')">3</button>
+        <button class="key-btn" onclick="appendPin('4')">4</button>
+        <button class="key-btn" onclick="appendPin('5')">5</button>
+        <button class="key-btn" onclick="appendPin('6')">6</button>
+        <button class="key-btn" onclick="appendPin('7')">7</button>
+        <button class="key-btn" onclick="appendPin('8')">8</button>
+        <button class="key-btn" onclick="appendPin('9')">9</button>
+        <button class="key-btn" style="font-size:12px;color:var(--accent-rose);" onclick="clearPin()">CLR</button>
+        <button class="key-btn" onclick="appendPin('0')">0</button>
+        <button class="key-btn" style="font-size:12px;color:var(--accent-indigo);" onclick="backspacePin()">⌫</button>
+      </div>
+
+      <button class="btn-glass btn-primary" style="width:100%;margin-top:16px;padding:14px;" onclick="executeLogin()">
+        AUTHENTICATE OPS CONSOLE
+      </button>
+    </div>
+  </section>
+
+  <!-- MAIN SHELL -->
+  <div id="mainShell" class="hidden">
+    <header class="top-glass-bar">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:38px;height:38px;border-radius:13px;background:var(--grad-primary);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:inset 0 1px 1px rgba(255,255,255,0.5);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/></svg>
+        </div>
+        <div>
+          <div style="font-size:13.5px;font-weight:800;" id="hdrUserName">-</div>
+          <div style="font-size:11px;color:var(--text-secondary);font-weight:600;" id="hdrUserSub">-</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button class="btn-glass btn-soft" style="padding:8px 10px;" onclick="syncEverything()" title="Sync Sheets">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        </button>
+        <button class="btn-glass btn-soft" style="padding:8px 10px;" onclick="toggleTheme()" title="Theme">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/></svg>
+        </button>
+        <button class="btn-glass btn-soft" style="padding:8px 10px;color:var(--accent-rose);" onclick="logoutUser()" title="Exit">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <div id="dlAlertBanner" class="glass-card hidden" style="border-left:5px solid var(--accent-rose);background:rgba(225,29,72,0.12);padding:13px 16px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+          <div style="font-size:12.5px;font-weight:700;color:var(--accent-rose);" id="dlAlertText"></div>
+          <button class="btn-glass btn-soft" style="padding:6px 10px;font-size:11px;" onclick="navigateTo('tabProfile')">Renew</button>
+        </div>
+      </div>
+
+      <section id="tabOTBoard"></section>
+      <section id="tabCalendarOps" class="hidden"></section>
+
+      <!-- TAB 3: NOTICES & DL PROFILE -->
+      <section id="tabProfile" class="hidden">
+        <div class="glass-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <h2 style="font-size:15px;font-weight:800;">📢 Digital Station Notice Board</h2>
+            <button id="openNoticeComposerBtn" class="btn-glass btn-primary hidden" style="padding:7px 12px;font-size:11.5px;" onclick="toggleNoticeComposer()">+ Post Notice</button>
+          </div>
+
+          <div id="noticeComposer" class="hidden" style="padding:14px;border-radius:16px;background:var(--input-bg);margin-bottom:14px;border:1px solid var(--input-border);">
+            <div style="display:grid;grid-template-columns:2fr 1fr;gap:8px;margin-bottom:8px;">
+              <input type="text" id="ntcTitle" class="glass-input" placeholder="Circular Headline" />
+              <select id="ntcPriority" class="glass-select">
+                <option value="NORMAL">Normal</option>
+                <option value="HIGH">High Priority</option>
+                <option value="URGENT">Urgent Flash</option>
+              </select>
+            </div>
+            <textarea id="ntcMessage" class="glass-input" rows="2" placeholder="Notice message..."></textarea>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px;">
+              <div style="font-size:12px;font-weight:700;">Expires: <input type="date" id="ntcExpiry" class="glass-input" style="width:auto;padding:6px 10px;" value="2026-12-31" /></div>
+              <button class="btn-glass btn-emerald" style="padding:8px 16px;" onclick="publishNotice()">Publish</button>
+            </div>
+          </div>
+          <div id="noticeBoardFeed"></div>
+        </div>
+
+        <div class="glass-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:46px;height:46px;border-radius:16px;background:var(--grad-primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;" id="profAvatar">BP</div>
+              <div>
+                <h2 style="font-size:16px;font-weight:800;" id="profFullName">-</h2>
+                <p style="font-size:12px;color:var(--text-secondary);font-weight:600;" id="profDesigLine">-</p>
+              </div>
+            </div>
+            <span class="glass-pill tabular" id="profPriorityBadge">Priority -</span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;">
+            <div class="dl-card" style="text-align:center;padding:10px;">
+              <div style="font-size:10px;color:var(--text-secondary);font-weight:700;">NORMAL OT</div>
+              <div class="tabular" style="font-size:17px;font-weight:800;color:var(--accent-indigo);" id="pStatNormalOt">0</div>
+            </div>
+            <div class="dl-card" style="text-align:center;padding:10px;">
+              <div style="font-size:10px;color:var(--text-secondary);font-weight:700;">CH/NH OT</div>
+              <div class="tabular" style="font-size:17px;font-weight:800;color:var(--accent-emerald);" id="pStatHolOt">0</div>
+            </div>
+            <div class="dl-card" style="text-align:center;padding:10px;">
+              <div style="font-size:10px;color:var(--text-secondary);font-weight:700;">EXCHANGES</div>
+              <div class="tabular" style="font-size:17px;font-weight:800;color:var(--accent-cyan);" id="pStatExch">0</div>
+            </div>
+            <div class="dl-card" style="text-align:center;padding:10px;">
+              <div style="font-size:10px;color:var(--text-secondary);font-weight:700;">RH USED</div>
+              <div class="tabular" style="font-size:17px;font-weight:800;color:var(--accent-amber);" id="pStatRh">0/2</div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;">
+            <div><label style="font-size:11px;font-weight:700;">Mobile</label><input type="text" id="profMobile" class="glass-input" /></div>
+            <div><label style="font-size:11px;font-weight:700;">Blood Group</label><input type="text" id="profBlood" class="glass-input" /></div>
+            <div><label style="font-size:11px;font-weight:700;">New PIN</label><input type="text" id="profNewPin" class="glass-input tabular" placeholder="Optional" /></div>
+          </div>
+
+          <div class="dl-grid">
+            <div class="dl-card">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:12px;font-weight:800;">🏍️ MCWG</span><span id="badgeMcwg" class="glass-pill">-</span></div>
+              <input type="text" id="mcwgNo" class="glass-input" style="margin-bottom:6px;padding:8px;font-size:12px;" placeholder="DL No" />
+              <input type="date" id="mcwgExp" class="glass-input" style="padding:8px;font-size:12px;" />
+            </div>
+            <div class="dl-card">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:12px;font-weight:800;">🚙 LMV</span><span id="badgeLmv" class="glass-pill">-</span></div>
+              <input type="text" id="lmvNo" class="glass-input" style="margin-bottom:6px;padding:8px;font-size:12px;" placeholder="DL No" />
+              <input type="date" id="lmvExp" class="glass-input" style="padding:8px;font-size:12px;" />
+            </div>
+            <div class="dl-card">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:12px;font-weight:800;">🚒 HMV</span><span id="badgeHmv" class="glass-pill">-</span></div>
+              <input type="text" id="hmvNo" class="glass-input" style="margin-bottom:6px;padding:8px;font-size:12px;" placeholder="HMV DL No" />
+              <input type="date" id="hmvExp" class="glass-input" style="padding:8px;font-size:12px;" />
+            </div>
+          </div>
+          <button class="btn-glass btn-primary" style="width:100%;margin-top:14px;" onclick="saveMyProfile()">Save Profile & DL Details</button>
+        </div>
+      </section>
+
+      <section id="tabCommandAdmin" class="hidden"></section>
+    </main>
+
+    <!-- FLOATING GLASS DOCK -->
+    <nav class="floating-dock">
+      <button class="dock-item active" data-tab="tabOTBoard" onclick="navigateTo('tabOTBoard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+        <span>OT Board</span>
+      </button>
+      <button class="dock-item" data-tab="tabCalendarOps" onclick="navigateTo('tabCalendarOps')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>Calendar/Swaps</span>
+      </button>
+      <button class="dock-item" data-tab="tabProfile" onclick="navigateTo('tabProfile')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Notices/DL</span>
+      </button>
+      <button class="dock-item hidden" id="dockCommandBtn" data-tab="tabCommandAdmin" onclick="navigateTo('tabCommandAdmin')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <span>Command</span>
+      </button>
+    </nav>
+  </div>
+  <!-- ======================================================================
+       PART 2: HIGH-SPEED CLIENT ENGINE, HORIZONTAL JPG EXPORT & ANALYTICS
+       ====================================================================== -->
+  <style>
+    .seg-bar {
+      display: inline-flex;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      padding: 4px;
+      border-radius: 15px;
+      gap: 4px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+    }
+    .seg-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 14px;
+      border-radius: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .seg-btn.active {
+      background: var(--glass-elevated);
+      color: var(--accent-indigo);
+      box-shadow: 0 3px 10px rgba(30, 58, 138, 0.12);
+    }
+
+    /* Two-Column 15-Slot Duty Sheet */
+    #whatsappSheetCapture {
+      background: #FFFFFF;
+      color: #0F172A;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1.5px solid #CBD5E1;
+      box-shadow: var(--glass-specular);
+    }
+    .sheet-banner {
+      background: linear-gradient(135deg, #1E1B4B 0%, #2563EB 55%, #0284C7 100%);
+      color: #FFFFFF;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .sheet-banner h2 { font-size: 15px; font-weight: 800; letter-spacing: 0.4px; }
+    .sheet-banner .date-line {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #FDE047;
+      margin-top: 3px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .dual-shift-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 760px) {
+      .dual-shift-grid { grid-template-columns: 1fr; }
+    }
+    /* Forced horizontal layout during JPG export even on mobile */
+    #whatsappSheetCapture.force-horizontal {
+      width: 1080px !important;
+      max-width: 1080px !important;
+      border-radius: 0 !important;
+    }
+    #whatsappSheetCapture.force-horizontal .dual-shift-grid {
+      grid-template-columns: 1fr 1fr !important;
+    }
+
+    .shift-pane { border-right: 1.5px solid #CBD5E1; }
+    .shift-pane:last-child { border-right: none; }
+
+    .pane-head {
+      padding: 9px 12px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #FFFFFF;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .pane-head.shift-a { background: linear-gradient(90deg, #1D4ED8, #0284C7); }
+    .pane-head.shift-b { background: linear-gradient(90deg, #6D28D9, #4F46E5); }
+
+    .slot-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .slot-table th {
+      background: #F1F5F9;
+      color: #475569;
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 6px 8px;
+      text-align: left;
+      border-bottom: 1px solid #CBD5E1;
+    }
+    .slot-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid #E2E8F0;
+      vertical-align: middle;
+      font-weight: 600;
+    }
+    .slot-row-ot { background: #FFFBEB; }
+    .slot-row-empty { background: #F8FAFC; color: #94A3B8; }
+
+    .ot-count-chip {
+      display: inline-block;
+      min-width: 28px;
+      text-align: center;
+      padding: 2px 7px;
+      border-radius: 7px;
+      background: #E2E8F0;
+      color: #0F172A;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      font-size: 11.5px;
+    }
+    .ot-count-chip.ext { background: #FEF3C7; color: #B45309; border: 1px solid #F59E0B; }
+
+    .svg-act-wrap { display: inline-flex; align-items: center; gap: 5px; margin-left: 6px; }
+    .svg-tick-btn, .svg-cross-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .svg-tick-btn { background: #DCFCE7; color: #15803D; border: 1px solid #86EFAC; }
+    .svg-tick-btn.confirmed { background: #16A34A; color: #FFFFFF; }
+    .svg-cross-btn { background: #FEE2E2; color: #DC2626; border: 1px solid #FCA5A5; }
+
+    .queue-strip {
+      padding: 8px 12px;
+      border-top: 1px dashed #CBD5E1;
+      font-size: 11.5px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+    .queue-strip.standby { background: #EFF6FF; }
+    .queue-strip.nw { background: #FEF2F2; }
+
+    .short-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #FFFFFF;
+      border: 1px solid #CBD5E1;
+      font-weight: 700;
+      font-size: 11px;
+      color: #1E293B;
+    }
+    .red-plus-one { color: #DC2626; font-weight: 900; font-family: 'JetBrains Mono', monospace; }
+
+    /* Watch Extension & Individual Duty Calendar */
+    .watch-cal-grid, .ind-cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 7px;
+      margin-top: 12px;
+    }
+    .w-day-cell, .cal-cell {
+      padding: 9px 4px;
+      border-radius: 15px;
+      text-align: center;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+      cursor: pointer;
+    }
+    .w-day-cell.active-ext { background: var(--grad-fire); color: #FFFFFF; border: none; }
+    .cal-cell .c-date { font-size: 10.5px; color: var(--text-secondary); font-weight: 700; }
+    .cal-cell .c-code { font-size: 12.5px; font-weight: 800; margin-top: 3px; font-family: 'JetBrains Mono', monospace; }
+
+    .duty-A   { background: rgba(37, 99, 235, 0.14); border-color: rgba(37, 99, 235, 0.35); color: #2563EB; }
+    .duty-B   { background: rgba(124, 58, 237, 0.14); border-color: rgba(124, 58, 237, 0.35); color: #7C3AED; }
+    .duty-OT  { background: var(--grad-fire); color: #FFFFFF !important; border: none; }
+    .duty-OFF { background: rgba(16, 185, 129, 0.14); border-color: rgba(16, 185, 129, 0.35); color: #059669; }
+    .duty-LV  { background: rgba(245, 158, 11, 0.16); border-color: rgba(245, 158, 11, 0.4); color: #D97706; }
+
+    /* Registry Cards */
+    .swap-card {
+      padding: 14px;
+      border-radius: 18px;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .status-chip { padding: 3px 9px; border-radius: 999px; font-size: 10.5px; font-weight: 800; text-transform: uppercase; }
+    .st-APPROVED  { background: rgba(16, 185, 129, 0.18); color: #059669; }
+    .st-PENDING   { background: rgba(245, 158, 11, 0.18); color: #D97706; }
+    .st-REJECTED  { background: rgba(239, 68, 68, 0.18); color: #DC2626; }
+    .st-CANCELLED { background: rgba(100, 116, 139, 0.2); color: #475569; }
+
+    /* Infographic KPI Grid & Circular Rings */
+    .kpi-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .kpi-tile {
+      padding: 16px;
+      border-radius: 22px;
+      background: var(--glass-elevated);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-specular);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .ring-svg { width: 52px; height: 52px; transform: rotate(-90deg); }
+    .ring-bg { fill: none; stroke: var(--input-border); stroke-width: 5; }
+    .ring-fg { fill: none; stroke-width: 5; stroke-linecap: round; }
+
+    .bar-chart-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 12px; font-weight: 700; }
+    .bar-track { flex: 1; height: 10px; border-radius: 99px; background: var(--input-bg); overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 99px; background: var(--grad-primary); }
+  </style>
+
+  <script>
+    /* ========================================================================
+       EMBEDDED GOOGLE SHEETS WEB APP ENDPOINT & MEMORY CACHE
+       ======================================================================== */
+    const API_URL = "https://script.google.com/macros/s/AKfycbx0fcMrCzWFfxXss4GnLWejfe51ZBBX-AhSDinq1RXdt87pRdN3t13wNKZrOvPyGNCsKw/exec";
+
+    let ALLOC_CACHE = {}; // Instant memory cache per date for 0ms switching!
+    let STATE = {
+      user: null,
+      employees: [],
+      allocation: null,
+      requests: [],
+      notices: [],
+      holidays: [],
+      watchExtensions: [],
+      analytics: null,
+      individualCalendar: [],
+      selectedDate: ''
+    };
+    let modalConfirmCallback = null;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('ARFF_THEME') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      setTimeout(() => {
+        document.getElementById('splashScreen').classList.add('fade-out');
+      }, 1100);
+      mountTabOTBoardHTML();
+    });
+
+    function showLoader(text = 'Syncing ARFF Watch Data...') {
+      document.getElementById('actionLoaderText').innerText = text;
+      document.getElementById('actionLoader').classList.remove('hidden');
+    }
+    function hideLoader() {
+      document.getElementById('actionLoader').classList.add('hidden');
+    }
+
+    function toggleTheme() {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('ARFF_THEME', next);
+    }
+
+    function appendPin(d) { document.getElementById('credentialInput').value += d; }
+    function clearPin() { document.getElementById('credentialInput').value = ''; }
+    function backspacePin() {
+      const inp = document.getElementById('credentialInput');
+      inp.value = inp.value.slice(0, -1);
+    }
+
+    function showToast(msg, type = 'info') {
+      const stack = document.getElementById('toastStack');
+      const el = document.createElement('div');
+      el.className = 'glass-toast';
+      const color = type === 'error' ? '#E11D48' : (type === 'success' ? '#059669' : '#2563EB');
+      el.style.borderLeft = `4px solid ${color}`;
+      el.innerHTML = `<span style="color:${color};font-size:16px;">●</span><span>${msg}</span>`;
+      stack.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(-10px)';
+        setTimeout(() => el.remove(), 250);
+      }, 3000);
+    }
+
+    function openConfirmModal(title, bodyText, onConfirm) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalBody').innerText = bodyText;
+      modalConfirmCallback = onConfirm;
+      document.getElementById('customModal').classList.remove('hidden');
+      document.getElementById('modalConfirmBtn').onclick = () => {
+        closeCustomModal();
+        if (modalConfirmCallback) modalConfirmCallback();
+      };
+    }
+    function closeCustomModal() {
+      document.getElementById('customModal').classList.add('hidden');
+    }
+
+    async function callApi(payload, loaderText = '') {
+      if (loaderText) showLoader(loaderText);
+      try {
+        const url = `${API_URL}?data=${encodeURIComponent(JSON.stringify(payload))}&_t=${Date.now()}`;
+        const res = await fetch(url, { method: 'GET' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return await res.json();
+      } catch (err) {
+        showToast('Network Error: ' + err.message, 'error');
+        throw err;
+      } finally {
+        if (loaderText) hideLoader();
+      }
+    }
+
+    /* ========================================================================
+       AUTHENTICATION & FAST BOOTSTRAP
+       ======================================================================== */
+    async function executeLogin() {
+      const cred = document.getElementById('credentialInput').value.trim();
+      if (!cred) return showToast('Enter Employee ID or Security PIN.', 'error');
+
+      const res = await callApi({ action: 'login', credential: cred }, 'Verifying ARFF Credentials...');
+      if (!res.success) return showToast(res.message, 'error');
+
+      STATE.user = res.user;
+      document.getElementById('loginView').classList.add('hidden');
+      document.getElementById('mainShell').classList.remove('hidden');
+
+      await loadBootstrap(STATE.selectedDate, true);
+      showToast(`Welcome, ${STATE.user.name}`, 'success');
+    }
+
+    function logoutUser() {
+      STATE.user = null;
+      ALLOC_CACHE = {};
+      document.getElementById('mainShell').classList.add('hidden');
+      document.getElementById('loginView').classList.remove('hidden');
+      clearPin();
+    }
+
+    async function loadBootstrap(dateStr = '', showOverlay = true) {
+      const data = await callApi({
+        action: 'getBootstrap',
+        empId: STATE.user.empId,
+        dateStr: dateStr
+      }, showOverlay ? 'Loading Watch & OT Console...' : '');
+
+      if (!data.success) return showToast(data.message, 'error');
+
+      STATE.user = data.user;
+      STATE.employees = data.employees;
+      STATE.allocation = data.allocation;
+      STATE.requests = data.requests;
+      STATE.notices = data.notices;
+      STATE.holidays = data.holidays;
+      STATE.watchExtensions = data.watchExtensions;
+      STATE.analytics = data.analytics;
+      STATE.individualCalendar = data.individualCalendar;
+      STATE.selectedDate = data.allocation.date;
+      ALLOC_CACHE[data.allocation.date] = data.allocation;
+
+      renderHeaderAndProfile();
+      renderNoticeBoard();
+      renderOTBoardView();
+      renderWatchExtensionHeatmap();
+      renderCalendarOpsView();
+      renderCommandAdminView();
+    }
+
+    async function syncEverything() {
+      ALLOC_CACHE = {};
+      await callApi({ action: 'syncAll' }, 'Recalculating All Roster & OT Matrices...');
+      await loadBootstrap(STATE.selectedDate, false);
+      showToast('All sheets & OT queues synchronized.', 'success');
+    }
+
+    function navigateTo(tabId) {
+      ['tabOTBoard', 'tabCalendarOps', 'tabProfile', 'tabCommandAdmin'].forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+      document.getElementById(tabId).classList.remove('hidden');
+      document.querySelectorAll('.dock-item').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tabId);
+      });
+    }
+
+    function isAuthorityUser() {
+      return STATE.user && ['Admin', 'Incharge', 'HOD'].includes(STATE.user.role);
+    }
+
+    /* ========================================================================
+       HEADER, PROFILE, DL TRACKER & NOTICE BOARD
+       ======================================================================== */
+    function renderHeaderAndProfile() {
+      const u = STATE.user;
+      document.getElementById('hdrUserName').innerText = u.name;
+      document.getElementById('hdrUserSub').innerText = `${u.designation} • ${u.role.toUpperCase()} • ID ${u.empId}`;
+
+      const auth = isAuthorityUser();
+      document.getElementById('dockCommandBtn').classList.toggle('hidden', !auth);
+      document.getElementById('openNoticeComposerBtn').classList.toggle('hidden', !auth);
+
+      const initials = u.name.split(' ').filter(Boolean).slice(0, 2).map(s => s[0]).join('');
+      document.getElementById('profAvatar').innerText = initials || 'AR';
+      document.getElementById('profFullName').innerText = u.name;
+      document.getElementById('profDesigLine').innerText = `${u.designation} • ID: ${u.empId} • Max OT Cap: ${u.maxOt}`;
+      document.getElementById('profPriorityBadge').innerText = `Priority Tier ${u.priorityTier}`;
+
+      if (u.metrics) {
+        document.getElementById('pStatNormalOt').innerText = `${u.metrics.actual} (+${u.metrics.dummy}D)`;
+        document.getElementById('pStatHolOt').innerText = u.metrics.totalHolOt || 0;
+        document.getElementById('pStatExch').innerText = u.metrics.exchanges || 0;
+        document.getElementById('pStatRh').innerText = `${u.metrics.rhUsed || 0}/2`;
+      }
+
+      document.getElementById('profMobile').value = u.mobile || '';
+      document.getElementById('profBlood').value = u.bloodGroup || '';
+      document.getElementById('mcwgNo').value = u.mcwgNo || '';
+      document.getElementById('mcwgExp').value = u.mcwgExp || '';
+      document.getElementById('lmvNo').value = u.lmvNo || '';
+      document.getElementById('lmvExp').value = u.lmvExp || '';
+      document.getElementById('hmvNo').value = u.hmvNo || '';
+      document.getElementById('hmvExp').value = u.hmvExp || '';
+
+      const alerts = [];
+      checkDlStatus('MCWG', u.mcwgExp, 'badgeMcwg', alerts);
+      checkDlStatus('LMV', u.lmvExp, 'badgeLmv', alerts);
+      checkDlStatus('HMV', u.hmvExp, 'badgeHmv', alerts);
+
+      const banner = document.getElementById('dlAlertBanner');
+      if (alerts.length > 0) {
+        banner.classList.remove('hidden');
+        document.getElementById('dlAlertText').innerText = '⚠️ Driving License Renewal Alert: ' + alerts.join(' | ');
+      } else {
+        banner.classList.add('hidden');
+      }
+    }
+
+    function checkDlStatus(label, expDateStr, badgeId, alertsArr) {
+      const badge = document.getElementById(badgeId);
+      if (!expDateStr) { badge.className = 'glass-pill'; badge.innerText = 'Not Set'; return; }
+      const diffDays = Math.ceil((new Date(expDateStr + 'T00:00:00') - new Date()) / 86400000);
+      if (diffDays < 0) {
+        badge.className = 'glass-pill badge-exp';
+        badge.innerText = `EXPIRED (${Math.abs(diffDays)}d)`;
+        alertsArr.push(`${label} expired on ${expDateStr}`);
+      } else if (diffDays <= 30) {
+        badge.className = 'glass-pill badge-warn';
+        badge.innerText = `Renew in ${diffDays}d`;
+        alertsArr.push(`${label} expires in ${diffDays}d (${expDateStr})`);
+      } else {
+        badge.className = 'glass-pill badge-valid';
+        badge.innerText = `Valid (${diffDays}d)`;
+      }
+    }
+
+    async function saveMyProfile() {
+      const res = await callApi({
+        action: 'updateProfile',
+        empId: STATE.user.empId,
+        mobile: document.getElementById('profMobile').value.trim(),
+        bloodGroup: document.getElementById('profBlood').value.trim(),
+        newPin: document.getElementById('profNewPin').value.trim(),
+        mcwgNo: document.getElementById('mcwgNo').value.trim(),
+        mcwgExp: document.getElementById('mcwgExp').value,
+        lmvNo: document.getElementById('lmvNo').value.trim(),
+        lmvExp: document.getElementById('lmvExp').value,
+        hmvNo: document.getElementById('hmvNo').value.trim(),
+        hmvExp: document.getElementById('hmvExp').value
+      }, 'Saving Profile & License Dates...');
+      if (res.success) {
+        showToast(res.message, 'success');
+        document.getElementById('profNewPin').value = '';
+        await loadBootstrap(STATE.selectedDate, false);
+      }
+    }
+
+    function toggleNoticeComposer() { document.getElementById('noticeComposer').classList.toggle('hidden'); }
+
+    async function publishNotice() {
+      const title = document.getElementById('ntcTitle').value.trim();
+      const message = document.getElementById('ntcMessage').value.trim();
+      if (!title || !message) return showToast('Enter headline and message.', 'error');
+      const res = await callApi({
+        action: 'postNotice', title, message,
+        priority: document.getElementById('ntcPriority').value,
+        expiresOn: document.getElementById('ntcExpiry').value,
+        postedBy: STATE.user.name, postedRole: STATE.user.role
+      }, 'Publishing Notice...');
+      if (res.success) {
+        showToast(res.message, 'success');
+        document.getElementById('ntcTitle').value = '';
+        document.getElementById('ntcMessage').value = '';
+        toggleNoticeComposer();
+        await loadBootstrap(STATE.selectedDate, false);
+      }
+    }
+
+    async function removeNotice(noticeId) {
+      openConfirmModal('Delete Notice', 'Remove this circular from the Notice Board?', async () => {
+        const res = await callApi({ action: 'deleteNotice', noticeId }, 'Removing Notice...');
+        if (res.success) { showToast(res.message, 'success'); await loadBootstrap(STATE.selectedDate, false); }
+      });
+    }
+
+    function renderNoticeBoard() {
+      const feed = document.getElementById('noticeBoardFeed');
+      if (!STATE.notices || STATE.notices.length === 0) {
+        feed.innerHTML = `<p style="font-size:12px;color:var(--text-muted);">No active notices.</p>`;
+        return;
+      }
+      const canDel = isAuthorityUser();
+      feed.innerHTML = STATE.notices.map(n => `
+        <div class="notice-item ${n.priority}">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+            <div style="font-size:13.5px;font-weight:800;">${n.title}</div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="glass-pill" style="font-size:10px;">${n.priority}</span>
+              ${canDel ? `<button style="border:none;background:none;color:var(--accent-rose);font-weight:800;cursor:pointer;" onclick="removeNotice('${n.noticeId}')">✕</button>` : ''}
+            </div>
+          </div>
+          <p style="font-size:12.5px;color:var(--text-secondary);margin:6px 0;line-height:1.45;">${n.message}</p>
+          <div style="font-size:10.5px;color:var(--text-muted);font-weight:600;">Posted by ${n.postedBy} (${n.postedRole}) • ${n.createdAt} • Expires ${n.expiresOn}</div>
+        </div>
+      `).join('');
+    }
+
+    /* ========================================================================
+       TAB 1: 15-SLOT OT BOARD, FAST DATE SWITCH & HORIZONTAL WHATSAPP JPG
+       ======================================================================== */
+    function mountTabOTBoardHTML() {
+      document.getElementById('tabOTBoard').innerHTML = `
+        <div class="glass-card" style="padding:14px;">
+          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;">
+            <div class="seg-bar">
+              <button class="seg-btn active" id="subBtnDaily" onclick="switchOTSubView('daily')">15-Slot Duty & OT</button>
+              <button class="seg-btn" id="subBtnHoliday" onclick="switchOTSubView('holiday')">CH / NH OT Ledger</button>
+              <button class="seg-btn hidden" id="subBtnWatch" onclick="switchOTSubView('watch')">Watch Ext (22-06)</button>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              <select id="otDatePicker" class="glass-select tabular" style="width:auto;padding:8px 12px;font-size:12.5px;" onchange="changeBoardDate(this.value)"></select>
+              <button class="btn-glass btn-primary" style="padding:9px 14px;font-size:12px;" onclick="downloadWhatsAppJPG()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                WhatsApp JPG
+              </button>
+            </div>
+          </div>
+
+          <div id="holidayAvailBar" class="hidden" style="margin-top:12px;padding:10px 14px;border-radius:14px;background:rgba(16,185,129,0.14);border:1px solid rgba(16,185,129,0.35);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;">
+            <div style="font-size:12.5px;font-weight:700;" id="holidayAvailText"></div>
+            <button class="btn-glass btn-emerald" style="padding:7px 14px;font-size:12px;" onclick="availTodayHoliday()">Avail Holiday Off</button>
+          </div>
+        </div>
+
+        <div id="subViewDaily">
+          <div id="whatsappSheetCapture">
+            <div class="sheet-banner">
+              <h2>AIRPORTS AUTHORITY OF INDIA • TIRUPATI AIRPORT (ARFF)</h2>
+              <div class="date-line" id="sheetDateHeading">DATE: --.--.---- (-------)</div>
+              <div style="font-size:11px;margin-top:4px;font-weight:700;">
+                SHIFT A: 0600 – 1400 HRS &nbsp;|&nbsp; SHIFT B: 1400 – 2200 HRS
+                <span id="sheetHolidayTag" class="hidden" style="background:#10B981;color:#fff;padding:2px 7px;border-radius:6px;margin-left:6px;"></span>
+                <span id="sheetWatchTag" class="hidden" style="background:#F59E0B;color:#0F172A;padding:2px 7px;border-radius:6px;margin-left:6px;">🔥 WATCH EXT +1 SHIFT B</span>
+              </div>
+            </div>
+
+            <div class="dual-shift-grid">
+              <div class="shift-pane">
+                <div class="pane-head shift-a">
+                  <span>SHIFT A (0600 – 1400 HRS)</span>
+                  <span class="tabular" id="metaShiftA">15/15</span>
+                </div>
+                <table class="slot-table">
+                  <thead><tr><th style="width:32px;">#</th><th>CREW MEMBER</th><th>DESIG</th><th style="text-align:right;">OT</th></tr></thead>
+                  <tbody id="tbodyShiftA"></tbody>
+                </table>
+                <div class="queue-strip standby"><strong style="color:#1D4ED8;">STANDBY:</strong><div id="standbyShiftA" style="display:flex;flex-wrap:wrap;gap:5px;"></div></div>
+                <div class="queue-strip nw"><strong style="color:#DC2626;">NOT WILLING:</strong><div id="nwShiftA" style="display:flex;flex-wrap:wrap;gap:5px;"></div></div>
+              </div>
+
+              <div class="shift-pane">
+                <div class="pane-head shift-b">
+                  <span>SHIFT B (1400 – 2200 HRS)</span>
+                  <span class="tabular" id="metaShiftB">15/15</span>
+                </div>
+                <table class="slot-table">
+                  <thead><tr><th style="width:32px;">#</th><th>CREW MEMBER</th><th>DESIG</th><th style="text-align:right;">OT</th></tr></thead>
+                  <tbody id="tbodyShiftB"></tbody>
+                </table>
+                <div class="queue-strip standby"><strong style="color:#1D4ED8;">STANDBY:</strong><div id="standbyShiftB" style="display:flex;flex-wrap:wrap;gap:5px;"></div></div>
+                <div class="queue-strip nw"><strong style="color:#DC2626;">NOT WILLING:</strong><div id="nwShiftB" style="display:flex;flex-wrap:wrap;gap:5px;"></div></div>
+              </div>
+            </div>
+
+            <div style="background:#F8FAFC;padding:9px 14px;border-top:1.5px solid #CBD5E1;font-size:11.5px;color:#334155;">
+              <strong>OFF / LEAVE / TRAINING:</strong> <span id="sheetOffList">-</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="subViewHoliday" class="hidden">
+          <div class="glass-card">
+            <h3 style="font-size:15px;font-weight:800;margin-bottom:4px;">Separate CH & NH Overtime Register</h3>
+            <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px;">Closed Holiday (CH) and National Holiday (26 Jan, 15 Aug, 02 Oct) OTs tracked independently by least count & seniority.</p>
+            <div style="overflow-x:auto;">
+              <table class="slot-table" style="background:var(--glass-elevated);color:var(--text-primary);border-radius:14px;overflow:hidden;">
+                <thead><tr><th>#</th><th>NAME</th><th>DESIG</th><th style="text-align:center;">CH OT</th><th style="text-align:center;">NH OT</th><th style="text-align:center;">TOTAL HOL OT</th><th style="text-align:center;">RH AVAILED</th></tr></thead>
+                <tbody id="tbodyHolidayLedger"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="subViewWatch" class="hidden">
+          <div class="glass-card">
+            <h3 style="font-size:15px;font-weight:800;margin-bottom:4px;">Night Watch Extension Manager (2200 – 0600 Hrs)</h3>
+            <p style="font-size:12px;color:var(--text-secondary);">Tap a date to mark/clear Watch Extension (+1 OT credited to all Shift B crew on duty that night).</p>
+            <div id="watchCalGrid" class="watch-cal-grid"></div>
+            <div id="watchEditDrawer" class="hidden" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--input-border);">
+              <div style="font-size:13px;font-weight:800;margin-bottom:8px;" id="watchDrawerDateLabel"></div>
+              <input type="text" id="watchReasonField" class="glass-input" placeholder="Extension Reason (e.g., Delayed Flight / VIP)" />
+              <div style="display:flex;gap:10px;margin-top:10px;">
+                <button class="btn-glass btn-fire" style="flex:1;" onclick="commitWatchExtension(true)">🔥 Activate +1 Shift B OT</button>
+                <button class="btn-glass btn-soft" style="flex:1;" onclick="commitWatchExtension(false)">Clear Extension</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function switchOTSubView(view) {
+      ['daily', 'holiday', 'watch'].forEach(v => {
+        document.getElementById('subView' + v.charAt(0).toUpperCase() + v.slice(1)).classList.toggle('hidden', v !== view);
+        document.getElementById('subBtn' + v.charAt(0).toUpperCase() + v.slice(1)).classList.toggle('active', v === view);
+      });
+    }
+
+    /* Ultra-fast date switching using local cache + lightweight getAllocation endpoint */
+    async function changeBoardDate(newDate) {
+      STATE.selectedDate = newDate;
+      if (ALLOC_CACHE[newDate]) {
+        STATE.allocation = ALLOC_CACHE[newDate];
+        renderOTBoardView();
+        return;
+      }
+      const res = await callApi({ action: 'getAllocation', dateStr: newDate }, `Loading Roster for ${newDate}...`);
+      if (res && res.success && res.allocation) {
+        ALLOC_CACHE[newDate] = res.allocation;
+        STATE.allocation = res.allocation;
+        renderOTBoardView();
+      }
+    }
+
+    function renderOTBoardView() {
+      const alloc = STATE.allocation;
+      if (!alloc) return;
+
+      document.getElementById('subBtnWatch').classList.toggle('hidden', !isAuthorityUser());
+
+      const picker = document.getElementById('otDatePicker');
+      if (picker.options.length === 0 && alloc.allDates) {
+        picker.innerHTML = alloc.allDates.map(d => `<option value="${d}">${d}</option>`).join('');
+      }
+      picker.value = alloc.date;
+
+      const holBar = document.getElementById('holidayAvailBar');
+      const holTag = document.getElementById('sheetHolidayTag');
+      if (alloc.holidayInfo) {
+        holTag.classList.remove('hidden');
+        holTag.innerText = `${alloc.holidayInfo.type}: ${alloc.holidayInfo.name}`;
+        if (['CH', 'RH'].includes(alloc.holidayInfo.type)) {
+          holBar.classList.remove('hidden');
+          document.getElementById('holidayAvailText').innerText = `📅 Today is ${alloc.holidayInfo.name} (${alloc.holidayInfo.type}). Tap to avail holiday off.`;
+        } else {
+          holBar.classList.add('hidden');
+        }
+      } else {
+        holTag.classList.add('hidden');
+        holBar.classList.add('hidden');
+      }
+
+      const isWatchExt = alloc.watchExtension && alloc.watchExtension.extended;
+      document.getElementById('sheetWatchTag').classList.toggle('hidden', !isWatchExt);
+      document.getElementById('sheetDateHeading').innerText = `DATE: ${alloc.displayDate}`;
+
+      document.getElementById('metaShiftA').innerText = `${Math.min(15, alloc.shiftA.regular.length + alloc.shiftA.otSelected.length)}/15`;
+      document.getElementById('tbodyShiftA').innerHTML = build15SlotRows(alloc.shiftA.regular, alloc.shiftA.otSelected, 'A', false);
+      document.getElementById('standbyShiftA').innerHTML = renderShortPills(alloc.shiftA.standby, false);
+      document.getElementById('nwShiftA').innerHTML = renderShortPills(alloc.shiftA.notWilling, true);
+
+      document.getElementById('metaShiftB').innerText = `${Math.min(15, alloc.shiftB.regular.length + alloc.shiftB.otSelected.length)}/15`;
+      document.getElementById('tbodyShiftB').innerHTML = build15SlotRows(alloc.shiftB.regular, alloc.shiftB.otSelected, 'B', isWatchExt);
+      document.getElementById('standbyShiftB').innerHTML = renderShortPills(alloc.shiftB.standby, false);
+      document.getElementById('nwShiftB').innerHTML = renderShortPills(alloc.shiftB.notWilling, true);
+
+      document.getElementById('sheetOffList').innerText = alloc.offOrLeave.length
+        ? alloc.offOrLeave.map(p => `${p.shortName} (${p.dutyCode})`).join(', ')
+        : 'All crew accounted';
+
+      const crewOnly = STATE.employees.filter(e => e.slNo > 0);
+      document.getElementById('tbodyHolidayLedger').innerHTML = crewOnly.map((e, idx) => `
+        <tr>
+          <td class="tabular">${idx + 1}</td>
+          <td>${e.name}</td>
+          <td>${e.designation}</td>
+          <td class="tabular" style="text-align:center;font-weight:800;">${e.metrics.chOt || 0}</td>
+          <td class="tabular" style="text-align:center;font-weight:800;">${e.metrics.nhOt || 0}</td>
+          <td class="tabular" style="text-align:center;font-weight:800;color:var(--accent-indigo);">${e.metrics.totalHolOt || 0}</td>
+          <td class="tabular" style="text-align:center;">${e.metrics.rhUsed || 0} / 2</td>
+        </tr>
+      `).join('');
+    }
+
+    function build15SlotRows(regularList, otSelectedList, targetShift, isWatchExt) {
+      const combined = [
+        ...regularList.map(p => ({ ...p, isOT: false })),
+        ...otSelectedList.map(p => ({ ...p, isOT: true }))
+      ];
+      let html = '';
+      for (let slot = 1; slot <= 15; slot++) {
+        const p = combined[slot - 1];
+        if (!p) {
+          html += `<tr class="slot-row-empty"><td class="tabular">${slot}</td><td colspan="3">— Vacant Slot —</td></tr>`;
+          continue;
+        }
+        const otDisplay = isWatchExt ? `${p.effectiveOt}+1` : `${p.effectiveOt}`;
+        const canAct = p.isOT && (p.empId === STATE.user.empId || isAuthorityUser());
+
+        let svgButtons = '';
+        if (p.isOT) {
+          if (canAct) {
+            svgButtons = `
+              <span class="svg-act-wrap" data-html2canvas-ignore="true">
+                <button class="svg-tick-btn ${p.status === 'WILLING' ? 'confirmed' : ''}" title="Willing" onclick="handleOTToggle('${targetShift}','${p.empId}','WILLING')">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </button>
+                <button class="svg-cross-btn" title="Not Willing" onclick="handleOTToggle('${targetShift}','${p.empId}','NOT_WILLING')">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+              </span>`;
+          } else if (p.status === 'WILLING') {
+            svgButtons = `<span style="color:#16A34A;font-weight:800;font-size:11px;margin-left:4px;">✓</span>`;
+          }
+        }
+
+        html += `
+          <tr class="${p.isOT ? 'slot-row-ot' : ''}">
+            <td class="tabular" style="font-weight:800;">${slot}</td>
+            <td>
+              <span>${p.name}</span>
+              ${p.isOT ? `<span style="font-size:9.5px;font-weight:800;color:#B45309;margin-left:4px;">[OT]</span>` : ''}
+              ${svgButtons}
+            </td>
+            <td style="font-size:11px;color:#475569;">${p.designation}</td>
+            <td style="text-align:right;"><span class="ot-count-chip ${isWatchExt ? 'ext' : ''}">${otDisplay}</span></td>
+          </tr>
+        `;
+      }
+      return html;
+    }
+
+    function renderShortPills(list, isNotWilling) {
+      if (!list || list.length === 0) return `<span style="color:#64748B;">None</span>`;
+      return list.map(p => {
+        if (isNotWilling) {
+          const badge = p.dummyApplied === 'YES'
+            ? `<span class="red-plus-one">+1</span>`
+            : `<span style="color:#059669;font-size:10px;font-weight:800;">EXEMPT</span>`;
+          return `<span class="short-pill">${p.shortName} ${badge}</span>`;
+        }
+        return `<span class="short-pill">${p.shortName} (${p.effectiveOt})</span>`;
+      }).join('');
+    }
+
+    async function handleOTToggle(targetShift, empId, decision) {
+      const msg = decision === 'WILLING'
+        ? `Confirm WILLING for Shift ${targetShift} OT on ${STATE.selectedDate}?`
+        : `Mark NOT WILLING for Shift ${targetShift} OT? (+1 Dummy OT applies unless exempt by adjacent Week Off/Leave)`;
+
+      openConfirmModal('OT Duty Response', msg, async () => {
+        const res = await callApi({
+          action: 'submitOTResponse',
+          dateStr: STATE.selectedDate,
+          targetShift,
+          empId,
+          decision
+        }, 'Updating OT Allocation & Ledger...');
+        if (res.success) {
+          ALLOC_CACHE = {};
+          showToast(res.message, 'success');
+          await loadBootstrap(STATE.selectedDate, false);
+        } else {
+          showToast(res.message, 'error');
+        }
+      });
+    }
+
+    async function availTodayHoliday() {
+      const hol = STATE.allocation.holidayInfo;
+      if (!hol) return;
+      openConfirmModal(`Avail ${hol.type}`, `Avail ${hol.name} (${hol.type}) on ${hol.date}?`, async () => {
+        const res = await callApi({
+          action: 'availHoliday', empId: STATE.user.empId, dateStr: hol.date, holidayType: hol.type
+        }, `Availing ${hol.type}...`);
+        if (res.success) {
+          ALLOC_CACHE = {};
+          showToast(res.message, 'success');
+          await loadBootstrap(STATE.selectedDate, false);
+        } else {
+          showToast(res.message, 'error');
+        }
+      });
+    }
+
+    /* Forces Horizontal Two-Column Desktop Layout (1080px) even on Mobile Screens */
+    function downloadWhatsAppJPG() {
+      const el = document.getElementById('whatsappSheetCapture');
+      showLoader('Rendering Horizontal WhatsApp JPG...');
+      el.classList.add('force-horizontal');
+
+      setTimeout(() => {
+        html2canvas(el, {
+          scale: 2,
+          width: 1080,
+          windowWidth: 1200,
+          backgroundColor: '#FFFFFF',
+          useCORS: true
+        }).then(canvas => {
+          el.classList.remove('force-horizontal');
+          hideLoader();
+          const link = document.createElement('a');
+          link.download = `AAI_Tirupati_ARFF_OT_${STATE.selectedDate}.jpg`;
+          link.href = canvas.toDataURL('image/jpeg', 0.95);
+          link.click();
+          showToast('Horizontal WhatsApp JPG downloaded!', 'success');
+        }).catch(err => {
+          el.classList.remove('force-horizontal');
+          hideLoader();
+          showToast('JPG Export Error: ' + err.message, 'error');
+        });
+      }, 120);
+    }
+
+    /* ========================================================================
+       WATCH EXTENSION HEATMAP
+       ======================================================================== */
+    let activeWatchDate = '';
+    function renderWatchExtensionHeatmap() {
+      const grid = document.getElementById('watchCalGrid');
+      if (!grid || !STATE.allocation || !STATE.allocation.allDates) return;
+      const extMap = {};
+      (STATE.watchExtensions || []).forEach(w => { if (w.extended) extMap[w.date] = w; });
+
+      grid.innerHTML = STATE.allocation.allDates.map(d => {
+        const isExt = Boolean(extMap[d]);
+        return `
+          <div class="w-day-cell ${isExt ? 'active-ext' : ''}" onclick="selectWatchHeatmapDate('${d}')">
+            <div class="tabular" style="font-size:12px;font-weight:800;">${d.slice(8,10)}/${d.slice(5,7)}</div>
+            <div style="font-size:9.5px;font-weight:700;margin-top:2px;">${isExt ? '🔥 +1 B' : 'Normal'}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function selectWatchHeatmapDate(dateStr) {
+      if (!isAuthorityUser()) return;
+      activeWatchDate = dateStr;
+      const existing = (STATE.watchExtensions || []).find(w => w.date === dateStr);
+      document.getElementById('watchEditDrawer').classList.remove('hidden');
+      document.getElementById('watchDrawerDateLabel').innerText = `Night Watch Extension (2200–0600) • Date: ${dateStr}`;
+      document.getElementById('watchReasonField').value = existing ? existing.reason : '';
+    }
+
+    async function commitWatchExtension(extended) {
+      if (!activeWatchDate) return;
+      const res = await callApi({
+        action: 'saveWatchExtension',
+        dateStr: activeWatchDate,
+        extended,
+        reason: document.getElementById('watchReasonField').value.trim(),
+        markedBy: STATE.user.name
+      }, 'Updating Night Watch Extension...');
+      if (res.success) {
+        ALLOC_CACHE = {};
+        showToast(res.message, 'success');
+        await loadBootstrap(STATE.selectedDate, false);
+      }
+    }
+
+    /* ========================================================================
+       TAB 2: INDIVIDUAL CALENDAR, EXCHANGES (PARTNER-ONLY) & CANCEL/REVERT
+       ======================================================================== */
+    function renderCalendarOpsView() {
+      const container = document.getElementById('tabCalendarOps');
+      if (!container || !STATE.allocation) return;
+
+      const dates = STATE.allocation.allDates || [];
+      const dateOpts = dates.map(d => `<option value="${d}">${d}</option>`).join('');
+      const partnerOpts = (STATE.employees || [])
+        .filter(e => e.slNo > 0 && e.empId !== STATE.user.empId)
+        .map(e => `<option value="${e.empId}">${e.name} (${e.designation})</option>`)
+        .join('');
+
+      container.innerHTML = `
+        <div class="glass-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+            <div>
+              <h2 style="font-size:15.5px;font-weight:800;">My Implemented Duty & OT Calendar</h2>
+              <p style="font-size:11.5px;color:var(--text-secondary);">Actual performed shifts including <strong>A+B / B+A</strong> OTs, Exchanges & Leaves</p>
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;font-size:10.5px;font-weight:700;">
+              <span class="glass-pill duty-A">A: 06-14</span>
+              <span class="glass-pill duty-B">B: 14-22</span>
+              <span class="glass-pill duty-OT">A+B / B+A</span>
+              <span class="glass-pill duty-OFF">O: Off</span>
+            </div>
+          </div>
+
+          <div class="ind-cal-grid">
+            ${(STATE.individualCalendar || []).map(day => {
+              let cls = 'duty-A';
+              if (day.duty.includes('+')) cls = 'duty-OT';
+              else if (day.duty === 'B') cls = 'duty-B';
+              else if (day.duty === 'O') cls = 'duty-OFF';
+              else if (day.duty !== 'A') cls = 'duty-LV';
+              return `
+                <div class="cal-cell ${cls}">
+                  <div class="c-date tabular">${day.date.slice(8,10)}/${day.date.slice(5,7)}</div>
+                  <div class="c-code">${day.duty || '-'}</div>
+                  ${day.otMark ? `<div style="font-size:9px;font-weight:800;margin-top:2px;">[${day.otMark}]</div>` : ''}
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;">
+          <div class="glass-card">
+            <h3 style="font-size:14.5px;font-weight:800;margin-bottom:4px;">🔄 Mutual Shift / Week-Off Exchange</h3>
+            <p style="font-size:11.5px;color:var(--text-secondary);margin-bottom:10px;">
+              Activates immediately upon <strong>Partner Approval</strong> (no HOD/Incharge approval needed). Shift exchange makes both ineligible for OT.
+            </p>
+            <div style="display:flex;flex-direction:column;gap:9px;">
+              <select id="swapSubType" class="glass-select">
+                <option value="SHIFT_EXCHANGE">Mutual Shift Exchange (OT Ineligible)</option>
+                <option value="WO_EXCHANGE">Mutual Week-Off Exchange (OT Eligible)</option>
+              </select>
+              <select id="swapDate" class="glass-select tabular">${dateOpts}</select>
+              <select id="swapPartner" class="glass-select">${partnerOpts}</select>
+              <input type="text" id="swapRemarks" class="glass-input" placeholder="Remarks (Optional)" />
+              <button class="btn-glass btn-primary" onclick="submitExchangeForm()">Send Mutual Request</button>
+            </div>
+          </div>
+
+          <div class="glass-card">
+            <h3 style="font-size:14.5px;font-weight:800;margin-bottom:4px;">🗓️ Apply Leave / Training / General Duty</h3>
+            <p style="font-size:11.5px;color:var(--text-secondary);margin-bottom:10px;">
+              Requires Incharge / HOD approval. Automatically updates roster & grants adjacent-day Dummy OT exemptions.
+            </p>
+            <div style="display:flex;flex-direction:column;gap:9px;">
+              <select id="leaveSubType" class="glass-select">
+                <option value="CL">CL — Casual Leave</option>
+                <option value="EL">EL — Earned Leave</option>
+                <option value="ML">ML — Medical Leave</option>
+                <option value="CO">CO — Compensatory Off</option>
+                <option value="T">T — Tour / Training</option>
+                <option value="G">G — General Duty (0930–1730)</option>
+              </select>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <select id="leaveFrom" class="glass-select tabular">${dateOpts}</select>
+                <select id="leaveTo" class="glass-select tabular">${dateOpts}</select>
+              </div>
+              <input type="text" id="leaveRemarks" class="glass-input" placeholder="Purpose / Details" />
+              <button class="btn-glass btn-emerald" onclick="submitLeaveForm()">Submit Leave / Duty</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RECENT EXCHANGES & PRINTABLE LEAVE REGISTRY -->
+        <div class="glass-card" id="printableLeaveSection">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+            <div>
+              <h3 style="font-size:15px;font-weight:800;">📋 Recent Exchanges & Leave Registry</h3>
+              <p style="font-size:11px;color:var(--text-secondary);">AAI Tirupati Airport • ARFF Division Official Movement & Swap Log</p>
+            </div>
+            <button class="btn-glass btn-soft no-print" style="padding:8px 14px;font-size:12px;" onclick="window.print()">
+              🖨️ Print Leave Registry
+            </button>
+          </div>
+          <div id="recentRegistryFeed">
+            ${renderRegistryCards(STATE.requests || [])}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderRegistryCards(list) {
+      if (!list.length) return `<p style="font-size:12px;color:var(--text-muted);">No mutual exchanges or leave requests recorded yet.</p>`;
+
+      return list.map(r => {
+        const isExchange = r.category === 'EXCHANGE';
+        const isPartnerPending = isExchange && r.partnerId === STATE.user.empId && r.partnerStatus === 'PENDING' && r.finalStatus === 'PENDING';
+        const isLeaveAuthPending = !isExchange && isAuthorityUser() && r.inchargeStatus === 'PENDING' && r.finalStatus === 'PENDING';
+        const showApproveReject = isPartnerPending || isLeaveAuthPending;
+
+        // Allow Cancel & Revert if APPROVED and user is requester, partner, or Authority
+        const canCancelRevert = r.finalStatus === 'APPROVED' && (
+          r.requesterId === STATE.user.empId || r.partnerId === STATE.user.empId || isAuthorityUser()
+        );
+
+        return `
+          <div class="swap-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+              <div style="font-size:13px;font-weight:800;">
+                ${r.subType.replace('_', ' ')}
+                <span class="tabular" style="font-size:11px;color:var(--text-muted);margin-left:6px;">#${r.reqId}</span>
+              </div>
+              <span class="status-chip st-${r.finalStatus}">${r.finalStatus}</span>
+            </div>
+
+            <div style="font-size:12.5px;font-weight:600;">
+              <strong>${r.requesterName}</strong>
+              ${r.partnerName ? ` <span style="color:var(--accent-indigo);font-weight:800;">⇄</span> <strong>${r.partnerName}</strong>` : ''}
+            </div>
+
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;font-size:11px;color:var(--text-secondary);">
+              <span class="tabular">📅 ${r.dateFrom}${r.dateTo !== r.dateFrom ? ' → ' + r.dateTo : ''}</span>
+              <span>${isExchange ? `Partner: <strong>${r.partnerStatus}</strong>` : `Authority: <strong>${r.inchargeStatus}</strong>`} • ${r.createdAt}</span>
+            </div>
+
+            ${showApproveReject ? `
+              <div class="no-print" style="display:flex;gap:8px;margin-top:4px;">
+                <button class="btn-glass btn-emerald" style="flex:1;padding:8px;font-size:12px;" onclick="handleApprovalAction('${r.reqId}','APPROVED')">✓ Approve</button>
+                <button class="btn-glass btn-fire" style="flex:1;padding:8px;font-size:12px;" onclick="handleApprovalAction('${r.reqId}','REJECTED')">✕ Decline</button>
+              </div>
+            ` : ''}
+
+            ${canCancelRevert ? `
+              <div class="no-print" style="margin-top:4px;">
+                <button class="btn-glass btn-soft" style="width:100%;padding:7px;font-size:11.5px;color:var(--accent-rose);border-color:rgba(225,29,72,0.35);" onclick="handleCancelAndRevert('${r.reqId}')">
+                  ↺ Cancel Approved & Revert Roster
+                </button>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function submitExchangeForm() {
+      const partnerId = document.getElementById('swapPartner').value;
+      const partner = STATE.employees.find(e => e.empId === partnerId);
+      const res = await callApi({
+        action: 'submitRequest',
+        category: 'EXCHANGE',
+        subType: document.getElementById('swapSubType').value,
+        dateFrom: document.getElementById('swapDate').value,
+        dateTo: document.getElementById('swapDate').value,
+        requesterId: STATE.user.empId,
+        requesterName: STATE.user.name,
+        partnerId: partner.empId,
+        partnerName: partner.name,
+        remarks: document.getElementById('swapRemarks').value.trim()
+      }, 'Sending Mutual Exchange Request...');
+      if (res.success) {
+        showToast(res.message, 'success');
+        await loadBootstrap(STATE.selectedDate, false);
+      }
+    }
+
+    async function submitLeaveForm() {
+      const res = await callApi({
+        action: 'submitRequest',
+        category: 'LEAVE_DUTY',
+        subType: document.getElementById('leaveSubType').value,
+        dateFrom: document.getElementById('leaveFrom').value,
+        dateTo: document.getElementById('leaveTo').value,
+        requesterId: STATE.user.empId,
+        requesterName: STATE.user.name,
+        remarks: document.getElementById('leaveRemarks').value.trim()
+      }, 'Submitting Leave / Duty...');
+      if (res.success) {
+        showToast(res.message, 'success');
+        await loadBootstrap(STATE.selectedDate, false);
+      }
+    }
+
+    async function handleApprovalAction(reqId, decision) {
+      openConfirmModal(`${decision} Request`, `Confirm ${decision} for ${reqId}? Roster updates automatically upon approval.`, async () => {
+        const res = await callApi({
+          action: 'actOnRequest',
+          reqId,
+          actorRole: STATE.user.role,
+          actorId: STATE.user.empId,
+          decision
+        }, `Updating ${reqId}...`);
+        if (res && res.success) {
+          ALLOC_CACHE = {};
+          showToast(res.message, 'success');
+          await loadBootstrap(STATE.selectedDate, false);
+        } else {
+          showToast((res && res.message) || 'Action failed.', 'error');
+        }
+      });
+    }
+
+    async function handleCancelAndRevert(reqId) {
+      openConfirmModal('Cancel & Revert Roster', `Cancel approved request ${reqId} and automatically restore original shift duties in the Roster?`, async () => {
+        const res = await callApi({
+          action: 'cancelRequest',
+          reqId,
+          cancelledBy: STATE.user.name
+        }, `Cancelling ${reqId} & Reverting Roster...`);
+        if (res && res.success) {
+          ALLOC_CACHE = {};
+          showToast(res.message, 'success');
+          await loadBootstrap(STATE.selectedDate, false);
+        } else {
+          showToast((res && res.message) || 'Cancel failed.', 'error');
+        }
+      });
+    }
+
+    /* ========================================================================
+       TAB 4: ADMIN, INCHARGE & HOD COMMAND ANALYTICS + MANAGEMENT CONSOLE
+       ======================================================================== */
+    function renderCommandAdminView() {
+      const container = document.getElementById('tabCommandAdmin');
+      if (!container || !isAuthorityUser() || !STATE.analytics) return;
+
+      const tc = STATE.analytics.todayCounts;
+      const lt = STATE.analytics.leaveTypes;
+      const maxLeaveVal = Math.max(1, ...Object.values(lt));
+      const crewOnly = (STATE.employees || []).filter(e => e.slNo > 0);
+
+      container.innerHTML = `
+        <div class="kpi-grid-4">
+          ${buildRingKpi('Shift A Strength', `${tc.A}/15`, Math.min(100, Math.round((tc.A / 15) * 100)), '#2563EB')}
+          ${buildRingKpi('Shift B Strength', `${tc.B}/15`, Math.min(100, Math.round((tc.B / 15) * 100)), '#7C3AED')}
+          ${buildRingKpi('OT Slots Filled', `${tc.OT}`, Math.min(100, tc.OT * 15), '#F59E0B')}
+          ${buildRingKpi('Off / On Leave', `${tc.O + tc.LEAVE}`, Math.min(100, Math.round(((tc.O + tc.LEAVE) / 29) * 100)), '#059669')}
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;">
+          <div class="glass-card">
+            <h3 style="font-size:14.5px;font-weight:800;margin-bottom:12px;">📊 Roster Leave & Duty Distribution</h3>
+            ${Object.entries(lt).map(([code, count]) => `
+              <div class="bar-chart-row">
+                <span class="tabular" style="width:36px;">${code}</span>
+                <div class="bar-track"><div class="bar-fill" style="width:${Math.round((count / maxLeaveVal) * 100)}%;"></div></div>
+                <span class="tabular" style="width:28px;text-align:right;">${count}</span>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="glass-card">
+            <h3 style="font-size:14.5px;font-weight:800;margin-bottom:12px;">🏅 Highest Leaves Availed (Current Cycle)</h3>
+            ${(STATE.analytics.topLeaveTakers || []).map((emp, i) => `
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:12px;background:var(--input-bg);margin-bottom:7px;font-size:12.5px;font-weight:700;">
+                <span>${i + 1}. ${emp.name} <span style="font-size:10.5px;color:var(--text-muted);">(${emp.designation})</span></span>
+                <span class="glass-pill tabular">${emp.totalLeaves} days</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <h3 style="font-size:14.5px;font-weight:800;margin-bottom:10px;">⚡ Pending Leave / Duty Approvals (Incharge / HOD / Admin)</h3>
+          ${renderRegistryCards((STATE.requests || []).filter(r => r.finalStatus === 'PENDING' && r.category !== 'EXCHANGE'))}
+        </div>
+
+        <div class="glass-card">
+          <h3 style="font-size:14.5px;font-weight:800;margin-bottom:6px;">🗓️ CH / RH / NH Holiday Manager (2026–2027)</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr 2fr auto;gap:8px;margin-bottom:12px;">
+            <input type="date" id="newHolDate" class="glass-input" />
+            <select id="newHolType" class="glass-select">
+              <option value="CH">CH (Closed)</option>
+              <option value="RH">RH (Restricted)</option>
+              <option value="NH">NH (National)</option>
+            </select>
+            <input type="text" id="newHolName" class="glass-input" placeholder="Holiday Name" />
+            <button class="btn-glass btn-primary" onclick="addNewHolidayItem()">+ Add</button>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            ${(STATE.holidays || []).map((h, idx) => `
+              <span class="glass-pill tabular">
+                <strong>${h.type}</strong> • ${h.date} (${h.name})
+                <button style="border:none;background:none;color:var(--accent-rose);font-weight:800;cursor:pointer;margin-left:4px;" onclick="removeHolidayItem(${idx})">✕</button>
+              </span>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <h3 style="font-size:14.5px;font-weight:800;margin-bottom:6px;">🔁 Auto-Generate Next 28-Day Roster</h3>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px;">
+            <input type="date" id="next28StartDate" class="glass-input" style="width:auto;" value="2026-12-20" />
+            <button class="btn-glass btn-fire" onclick="generateNext28Cycle()">Generate Next 28 Days</button>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <h3 style="font-size:14.5px;font-weight:800;margin-bottom:10px;">🛡️ Crew OT Ceiling & Security PIN Configuration</h3>
+          <div style="max-height:340px;overflow-y:auto;">
+            ${crewOnly.map(e => `
+              <div style="display:grid;grid-template-columns:2fr 80px 90px 70px;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--input-border);font-size:12px;">
+                <div>
+                  <strong>${e.slNo}. ${e.name}</strong>
+                  <div style="font-size:10.5px;color:var(--text-secondary);">${e.designation} • ID: ${e.empId} • OT: ${e.metrics.actual}</div>
+                </div>
+                <input type="number" id="cfgMax_${e.empId}" class="glass-input tabular" style="padding:6px 8px;font-size:12px;" value="${e.maxOt}" />
+                <input type="text" id="cfgPin_${e.empId}" class="glass-input tabular" style="padding:6px 8px;font-size:12px;" value="${e.pin}" />
+                <label style="display:flex;align-items:center;gap:4px;font-size:11px;font-weight:700;">
+                  <input type="checkbox" id="cfgRes_${e.empId}" ${e.restrictCeiling ? 'checked' : ''} /> Cap
+                </label>
+              </div>
+            `).join('')}
+          </div>
+          <button class="btn-glass btn-primary" style="width:100%;margin-top:12px;" onclick="saveAllCrewCaps()">Save All Ceiling & PIN Settings</button>
+        </div>
+      `;
+    }
+
+    function buildRingKpi(label, valueText, pct, color) {
+      const r = 20, c = 2 * Math.PI * r, offset = c - (pct / 100) * c;
+      return `
+        <div class="kpi-tile">
+          <div>
+            <div style="font-size:11px;color:var(--text-secondary);font-weight:700;">${label}</div>
+            <div class="tabular" style="font-size:21px;font-weight:800;margin-top:4px;">${valueText}</div>
+          </div>
+          <svg class="ring-svg" viewBox="0 0 52 52">
+            <circle class="ring-bg" cx="26" cy="26" r="${r}"/>
+            <circle class="ring-fg" cx="26" cy="26" r="${r}" stroke="${color}" stroke-dasharray="${c}" stroke-dashoffset="${offset}"/>
+          </svg>
+        </div>
+      `;
+    }
+
+    async function addNewHolidayItem() {
+      const date = document.getElementById('newHolDate').value;
+      const type = document.getElementById('newHolType').value;
+      const name = document.getElementById('newHolName').value.trim();
+      if (!date || !name) return showToast('Enter date and holiday name.', 'error');
+      const res = await callApi({ action: 'saveHolidays', holidays: [...(STATE.holidays || []), { date, type, name }] }, 'Adding Holiday...');
+      if (res.success) { ALLOC_CACHE = {}; showToast(res.message, 'success'); await loadBootstrap(STATE.selectedDate, false); }
+    }
+
+    async function removeHolidayItem(idx) {
+      const res = await callApi({ action: 'saveHolidays', holidays: (STATE.holidays || []).filter((_, i) => i !== idx) }, 'Removing Holiday...');
+      if (res.success) { ALLOC_CACHE = {}; showToast(res.message, 'success'); await loadBootstrap(STATE.selectedDate, false); }
+    }
+
+    async function generateNext28Cycle() {
+      const start = document.getElementById('next28StartDate').value;
+      if (!start) return showToast('Choose start date.', 'error');
+      openConfirmModal('Generate Next 28-Day Roster', `Append 28 new roster days starting ${start}?`, async () => {
+        const res = await callApi({ action: 'generateNext28Days', startDateStr: start, weekOffMap: {} }, 'Generating 28-Day Roster...');
+        if (res.success) { ALLOC_CACHE = {}; showToast(res.message, 'success'); await loadBootstrap(start, false); }
+      });
+    }
+
+    async function saveAllCrewCaps() {
+      const updates = (STATE.employees || []).filter(e => e.slNo > 0).map(e => ({
+        empId: e.empId,
+        maxOt: document.getElementById(`cfgMax_${e.empId}`).value,
+        pin: document.getElementById(`cfgPin_${e.empId}`).value,
+        restrictCeiling: document.getElementById(`cfgRes_${e.empId}`).checked
+      }));
+      const res = await callApi({ action: 'saveAdminSettings', updates }, 'Saving Crew Settings...');
+      if (res.success) { showToast(res.message, 'success'); await loadBootstrap(STATE.selectedDate, false); }
+    }
+  </script>
+</body>
+</html>
