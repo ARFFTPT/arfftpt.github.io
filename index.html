@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="theme-color" content="#3B82F6" />
-  <title>AAI Tirupati ARFF • Watch & OT Command</title>
+  <title>AAI Tirupati • ARFF OT & Leave System</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -15,14 +15,14 @@
        ======================================================================== */
     :root {
       --bg-gradient: linear-gradient(135deg, #DBEAFE 0%, #E0E7FF 30%, #FCE7F3 68%, #FEF3C7 100%);
-      --glass-surface: rgba(255, 255, 255, 0.68);
-      --glass-elevated: rgba(255, 255, 255, 0.86);
-      --glass-border: rgba(255, 255, 255, 0.85);
+      --glass-surface: rgba(255, 255, 255, 0.72);
+      --glass-elevated: rgba(255, 255, 255, 0.88);
+      --glass-border: rgba(255, 255, 255, 0.88);
       --glass-specular: inset 0 1.5px 1px rgba(255, 255, 255, 0.95), 0 16px 36px -6px rgba(30, 58, 138, 0.14);
       --text-primary: #0F172A;
       --text-secondary: #334155;
       --text-muted: #64748B;
-      --input-bg: rgba(255, 255, 255, 0.72);
+      --input-bg: rgba(255, 255, 255, 0.76);
       --input-border: rgba(148, 163, 184, 0.42);
 
       --accent-indigo: #4F46E5;
@@ -41,14 +41,14 @@
 
     [data-theme="dark"] {
       --bg-gradient: radial-gradient(circle at 15% 15%, #1E1B4B 0%, #0F172A 45%, #1E1024 85%, #090D16 100%);
-      --glass-surface: rgba(22, 28, 46, 0.66);
-      --glass-elevated: rgba(30, 38, 62, 0.85);
+      --glass-surface: rgba(22, 28, 46, 0.68);
+      --glass-elevated: rgba(30, 38, 62, 0.88);
       --glass-border: rgba(255, 255, 255, 0.16);
       --glass-specular: inset 0 1px 1px rgba(255, 255, 255, 0.22), 0 20px 44px -8px rgba(0, 0, 0, 0.65);
       --text-primary: #F8FAFC;
       --text-secondary: #CBD5E1;
       --text-muted: #94A3B8;
-      --input-bg: rgba(15, 23, 42, 0.68);
+      --input-bg: rgba(15, 23, 42, 0.72);
       --input-border: rgba(255, 255, 255, 0.16);
     }
 
@@ -111,13 +111,13 @@
     @keyframes fadeInFast { from { opacity: 0; } to { opacity: 1; } }
 
     /* ========================================================================
-       3. ANIMATED SPLASH SCREEN
+       3. ANIMATED SPLASH SCREEN WITH OFFICIAL AAI AFS CREST
        ======================================================================== */
     #splashScreen {
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 48%, #4C1D95 100%);
+      background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 48%, #311042 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -127,28 +127,29 @@
     }
     #splashScreen.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
 
-    .radar-ring {
+    .afs-crest-medallion {
       position: relative;
-      width: 88px;
-      height: 88px;
-      border-radius: 26px;
-      background: var(--grad-primary);
-      box-shadow: inset 0 2px 2px rgba(255,255,255,0.5), 0 0 40px rgba(79, 70, 229, 0.7);
+      width: 112px;
+      height: 112px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.96);
+      padding: 8px;
+      box-shadow: inset 0 2px 3px #fff, 0 0 42px rgba(59, 130, 246, 0.65);
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .radar-ring::before {
+    .afs-crest-medallion::before {
       content: '';
       position: absolute;
       inset: -12px;
-      border-radius: 34px;
+      border-radius: 38px;
       border: 2px solid rgba(96, 165, 250, 0.55);
       animation: pulseWave 1.6s infinite;
     }
     @keyframes pulseWave {
       0% { transform: scale(0.9); opacity: 0.9; }
-      100% { transform: scale(1.4); opacity: 0; }
+      100% { transform: scale(1.38); opacity: 0; }
     }
 
     /* ========================================================================
@@ -236,7 +237,7 @@
       -webkit-backdrop-filter: blur(26px) saturate(170%);
       border: 1px solid var(--glass-border);
       border-radius: 30px;
-      padding: 30px 24px;
+      padding: 28px 24px;
       box-shadow: var(--glass-specular);
     }
     .pin-keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
@@ -325,13 +326,41 @@
 </head>
 <body>
 
-  <!-- ANIMATED SPLASH SCREEN -->
+  <!-- ANIMATED SPLASH SCREEN WITH OFFICIAL AAI AFS CREST -->
   <div id="splashScreen">
-    <div class="radar-ring">
-      <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/><path d="M12 8v4l3 3"/></svg>
+    <div class="afs-crest-medallion">
+      <!-- Official AAI Airport Fire Services (AFS) Crest SVG -->
+      <svg viewBox="0 0 220 200" width="94" height="86" xmlns="http://www.w3.org/2000/svg">
+        <!-- Laurel Wreath -->
+        <g fill="#7DD3FC" stroke="#0284C7" stroke-width="1.2">
+          <ellipse cx="48" cy="115" rx="9" ry="5" transform="rotate(-35 48 115)"/>
+          <ellipse cx="40" cy="96" rx="9" ry="5" transform="rotate(-15 40 96)"/>
+          <ellipse cx="38" cy="76" rx="9" ry="5" transform="rotate(10 38 76)"/>
+          <ellipse cx="44" cy="56" rx="9" ry="5" transform="rotate(30 44 56)"/>
+          <ellipse cx="56" cy="39" rx="9" ry="5" transform="rotate(48 56 39)"/>
+          <ellipse cx="72" cy="26" rx="9" ry="5" transform="rotate(65 72 26)"/>
+          <ellipse cx="172" cy="115" rx="9" ry="5" transform="rotate(35 172 115)"/>
+          <ellipse cx="180" cy="96" rx="9" ry="5" transform="rotate(15 180 96)"/>
+          <ellipse cx="182" cy="76" rx="9" ry="5" transform="rotate(-10 182 76)"/>
+          <ellipse cx="176" cy="56" rx="9" ry="5" transform="rotate(-30 176 56)"/>
+          <ellipse cx="164" cy="39" rx="9" ry="5" transform="rotate(-48 164 39)"/>
+          <ellipse cx="148" cy="26" rx="9" ry="5" transform="rotate(-65 148 26)"/>
+        </g>
+        <!-- Top AAI Winged Emblem -->
+        <polygon points="110,12 92,42 103,42 110,27 117,42 128,42" fill="#1D4ED8"/>
+        <path d="M84 30 L136 42 L132 45 L82 33 Z" fill="#0284C7"/>
+        <circle cx="110" cy="7" r="3.5" fill="#1D4ED8"/>
+        <!-- Bold Red AFS -->
+        <text x="110" y="92" text-anchor="middle" font-family="Arial Black, sans-serif" font-weight="900" font-size="38" fill="#DC2626" letter-spacing="1">AFS</text>
+        <!-- Hindi Motto -->
+        <text x="110" y="114" text-anchor="middle" font-family="sans-serif" font-weight="800" font-size="13" fill="#EA580C">प्राणाय सेवा महे</text>
+        <!-- Bottom Navy Ribbon -->
+        <path d="M22 126 Q110 162 198 126 L186 154 Q110 186 34 154 Z" fill="#1E1B4B" stroke="#EAB308" stroke-width="2"/>
+        <text x="110" y="159" text-anchor="middle" font-family="sans-serif" font-weight="800" font-size="12.5" fill="#FEF08A">भारतीय विमानपत्तन प्राधिकरण</text>
+      </svg>
     </div>
-    <div style="margin-top:20px;font-size:18px;font-weight:800;letter-spacing:0.6px;">AAI TIRUPATI ARFF</div>
-    <div style="font-size:12px;color:#93C5FD;font-weight:600;margin-top:4px;">WATCH COMMAND • OT & ROSTER ENGINE</div>
+    <div style="margin-top:20px;font-size:18px;font-weight:800;letter-spacing:0.5px;">AAI TIRUPATI AIRPORT</div>
+    <div style="font-size:12.5px;color:#FDE047;font-weight:700;margin-top:4px;">ARFF OT & LEAVE SYSTEM</div>
   </div>
 
   <!-- INSTANT PROCESSING SPINNER OVERLAY -->
@@ -355,20 +384,41 @@
     </div>
   </div>
 
-  <!-- GLASS LOGIN SCREEN -->
+  <!-- GLASS LOGIN SCREEN WITH AFS LOGO -->
   <section id="loginView" class="login-stage">
     <div class="login-glass-box">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
         <span class="glass-pill" style="color:var(--accent-indigo);">VOTP • CAT-7 ARFF</span>
         <button class="btn-glass btn-soft" style="padding:6px 10px;border-radius:12px;" onclick="toggleTheme()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
       </div>
 
-      <h1 style="font-size:22px;font-weight:800;">Fire Official Sign-In</h1>
-      <p style="font-size:12.5px;color:var(--text-secondary);margin-top:4px;">Enter Employee ID or Security PIN</p>
+      <!-- AFS Crest on Login -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <div style="width:58px;height:58px;border-radius:18px;background:#fff;padding:4px;box-shadow:0 6px 16px rgba(30,58,138,0.14);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg viewBox="0 0 220 200" width="50" height="46" xmlns="http://www.w3.org/2000/svg">
+            <g fill="#7DD3FC" stroke="#0284C7" stroke-width="1.5">
+              <ellipse cx="44" cy="96" rx="10" ry="6" transform="rotate(-15 44 96)"/>
+              <ellipse cx="44" cy="66" rx="10" ry="6" transform="rotate(20 44 66)"/>
+              <ellipse cx="62" cy="38" rx="10" ry="6" transform="rotate(48 62 38)"/>
+              <ellipse cx="176" cy="96" rx="10" ry="6" transform="rotate(15 176 96)"/>
+              <ellipse cx="176" cy="66" rx="10" ry="6" transform="rotate(-20 176 66)"/>
+              <ellipse cx="158" cy="38" rx="10" ry="6" transform="rotate(-48 158 38)"/>
+            </g>
+            <polygon points="110,12 92,42 103,42 110,27 117,42 128,42" fill="#1D4ED8"/>
+            <text x="110" y="96" text-anchor="middle" font-family="Arial Black, sans-serif" font-weight="900" font-size="42" fill="#DC2626">AFS</text>
+            <path d="M24 128 Q110 162 196 128 L184 156 Q110 186 36 156 Z" fill="#1E1B4B" stroke="#EAB308" stroke-width="2.5"/>
+            <text x="110" y="159" text-anchor="middle" font-family="sans-serif" font-weight="800" font-size="13" fill="#FEF08A">AAI TIRUPATI</text>
+          </svg>
+        </div>
+        <div>
+          <h1 style="font-size:19px;font-weight:800;line-height:1.2;">ARFF OT & Leave System</h1>
+          <p style="font-size:12px;color:var(--text-secondary);margin-top:3px;">Sign in with Employee ID or Security PIN</p>
+        </div>
+      </div>
 
-      <div style="margin-top:16px;">
+      <div style="margin-top:14px;">
         <input type="password" id="credentialInput" class="glass-input tabular" style="font-size:18px;text-align:center;letter-spacing:3px;padding:13px;" placeholder="••••••" onkeyup="if(event.key==='Enter') executeLogin()" />
       </div>
 
@@ -388,7 +438,7 @@
       </div>
 
       <button class="btn-glass btn-primary" style="width:100%;margin-top:16px;padding:14px;" onclick="executeLogin()">
-        AUTHENTICATE OPS CONSOLE
+        ACCESS ARFF CONSOLE
       </button>
     </div>
   </section>
@@ -397,8 +447,12 @@
   <div id="mainShell" class="hidden">
     <header class="top-glass-bar">
       <div style="display:flex;align-items:center;gap:10px;">
-        <div style="width:38px;height:38px;border-radius:13px;background:var(--grad-primary);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:inset 0 1px 1px rgba(255,255,255,0.5);">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/></svg>
+        <div style="width:40px;height:40px;border-radius:13px;background:#fff;padding:3px;box-shadow:0 4px 12px rgba(30,58,138,0.16);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg viewBox="0 0 220 200" width="34" height="32" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="110,12 92,42 103,42 110,27 117,42 128,42" fill="#1D4ED8"/>
+            <text x="110" y="102" text-anchor="middle" font-family="Arial Black, sans-serif" font-weight="900" font-size="52" fill="#DC2626">AFS</text>
+            <path d="M24 132 Q110 164 196 132 L184 158 Q110 186 36 158 Z" fill="#1E1B4B"/>
+          </svg>
         </div>
         <div>
           <div style="font-size:13.5px;font-weight:800;" id="hdrUserName">-</div>
@@ -538,7 +592,7 @@
     </nav>
   </div>
   <!-- ======================================================================
-       CHUNK 3 OF 3: HIGH-SPEED CLIENT ENGINE, SENIORITY JPG & DIRECT BYPASS
+       CHUNK 3 OF 3: HIGH-SPEED CLIENT ENGINE, MOBILE SENIORITY JPG & BYPASSES
        ====================================================================== -->
   <style>
     .seg-bar {
@@ -568,7 +622,7 @@
     }
 
     /* Two-Column 15-Slot Duty Sheet */
-    #whatsappSheetCapture {
+    #whatsappSheetCapture, .jpg-export-clone {
       background: #FFFFFF;
       color: #0F172A;
       border-radius: 20px;
@@ -598,14 +652,20 @@
     @media (max-width: 760px) {
       .dual-shift-grid { grid-template-columns: 1fr; }
     }
-    /* Forced horizontal layout during JPG export even on mobile */
-    #whatsappSheetCapture.force-horizontal {
+
+    /* Guaranteed Horizontal Side-by-Side Layout for Mobile & Desktop JPG Clone */
+    .jpg-export-clone {
+      position: fixed;
+      left: -9999px;
+      top: 0;
       width: 1080px !important;
       max-width: 1080px !important;
       border-radius: 0 !important;
+      z-index: -1;
     }
-    #whatsappSheetCapture.force-horizontal .dual-shift-grid {
-      grid-template-columns: 1fr 1fr !important;
+    .jpg-export-clone .dual-shift-grid {
+      display: grid !important;
+      grid-template-columns: 540px 540px !important;
     }
 
     .shift-pane { border-right: 1.5px solid #CBD5E1; }
@@ -893,7 +953,7 @@
         action: 'getBootstrap',
         empId: STATE.user.empId,
         dateStr: dateStr
-      }, showOverlay ? 'Loading Watch & OT Console...' : '');
+      }, showOverlay ? 'Loading ARFF OT & Leave Console...' : '');
 
       if (!data.success) return showToast(data.message, 'error');
 
@@ -919,7 +979,7 @@
 
     async function syncEverything() {
       ALLOC_CACHE = {};
-      await callApi({ action: 'syncAll' }, 'Recalculating All Roster & OT Matrices...');
+      await callApi({ action: 'syncAll' }, 'Syncing Manual Sheet Edits & OT Queues...');
       await loadBootstrap(STATE.selectedDate, false);
       showToast('All sheets & OT queues synchronized.', 'success');
     }
@@ -1076,7 +1136,7 @@
     }
 
     /* ========================================================================
-       TAB 1: 15-SLOT OT BOARD, FAST DATE SWITCH & SENIORITY WHATSAPP JPG
+       TAB 1: 15-SLOT OT BOARD, FAST DATE SWITCH & MOBILE-SAFE SENIORITY JPG
        ======================================================================== */
     function mountTabOTBoardHTML() {
       document.getElementById('tabOTBoard').innerHTML = `
@@ -1202,11 +1262,6 @@
       }
     }
 
-    /**
-     * Renders the 15-Slot Board.
-     * When sortBySeniorityForJpg === true, merges regular + OT crew in each shift and sorts strictly
-     * by official Seniority (SL_No) so R Suresh, Rajkumar A R, K Suresh, etc. appear in exact seniority order!
-     */
     function renderOTBoardView(sortBySeniorityForJpg = false) {
       const alloc = STATE.allocation;
       if (!alloc) return;
@@ -1273,9 +1328,8 @@
         ...otSelectedList.map(p => ({ ...p, isOT: true }))
       ];
 
-      // When generating WhatsApp JPG, reorder all 15 slots strictly by Seniority (SL_No)!
       if (sortBySeniority) {
-        combined.sort((a, b) => a.slNo - b.slNo);
+        combined.sort((a, b) => Number(a.slNo) - Number(b.slNo));
       }
 
       let html = '';
@@ -1286,7 +1340,7 @@
           continue;
         }
         const otDisplay = isWatchExt ? `${p.effectiveOt}+1` : `${p.effectiveOt}`;
-        const canAct = p.isOT && (p.empId === STATE.user.empId || isAuthorityUser());
+        const canAct = !sortBySeniority && p.isOT && (p.empId === STATE.user.empId || isAuthorityUser());
 
         let svgButtons = '';
         if (p.isOT) {
@@ -1379,40 +1433,47 @@
     }
 
     /**
-     * Generates a 1080px Horizontal Two-Column WhatsApp JPEG with both Shift A and Shift B
-     * reordered strictly by Seniority (SL_No) so R Suresh, Rajkumar A R, K Suresh, etc. appear in order!
+     * Mobile-Guaranteed Seniority-Reordered Horizontal (1080px) WhatsApp JPEG Generator
      */
     function downloadWhatsAppJPG() {
-      const el = document.getElementById('whatsappSheetCapture');
+      const alloc = STATE.allocation;
+      if (!alloc) return;
       showLoader('Sorting Seniority & Rendering WhatsApp JPG...');
 
-      // Temporarily render both columns sorted by Seniority & lock horizontal 1080px width
-      renderOTBoardView(true);
-      el.classList.add('force-horizontal');
+      const isWatchExt = alloc.watchExtension && alloc.watchExtension.extended;
+      const clone = document.createElement('div');
+      clone.className = 'jpg-export-clone';
+      clone.innerHTML = document.getElementById('whatsappSheetCapture').innerHTML;
 
-      setTimeout(() => {
-        html2canvas(el, {
-          scale: 2,
-          width: 1080,
-          windowWidth: 1200,
-          backgroundColor: '#FFFFFF',
-          useCORS: true
-        }).then(canvas => {
-          el.classList.remove('force-horizontal');
-          renderOTBoardView(false); // Restore interactive OT view
-          hideLoader();
-          const link = document.createElement('a');
-          link.download = `AAI_Tirupati_ARFF_OT_${STATE.selectedDate}.jpg`;
-          link.href = canvas.toDataURL('image/jpeg', 0.95);
-          link.click();
-          showToast('Seniority-ordered Horizontal WhatsApp JPG downloaded!', 'success');
-        }).catch(err => {
-          el.classList.remove('force-horizontal');
-          renderOTBoardView(false);
-          hideLoader();
-          showToast('JPG Export Error: ' + err.message, 'error');
-        });
-      }, 150);
+      // Populate clone's Shift A & Shift B tables sorted strictly by Seniority (SL_No)
+      clone.querySelector('#tbodyShiftA').innerHTML = build15SlotRows(alloc.shiftA.regular, alloc.shiftA.otSelected, 'A', false, true);
+      clone.querySelector('#tbodyShiftB').innerHTML = build15SlotRows(alloc.shiftB.regular, alloc.shiftB.otSelected, 'B', isWatchExt, true);
+
+      document.body.appendChild(clone);
+
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          html2canvas(clone, {
+            scale: 2,
+            width: 1080,
+            windowWidth: 1200,
+            backgroundColor: '#FFFFFF',
+            useCORS: true
+          }).then(canvas => {
+            clone.remove();
+            hideLoader();
+            const link = document.createElement('a');
+            link.download = `AAI_Tirupati_ARFF_OT_${STATE.selectedDate}.jpg`;
+            link.href = canvas.toDataURL('image/jpeg', 0.95);
+            link.click();
+            showToast('Seniority-ordered Horizontal WhatsApp JPG downloaded!', 'success');
+          }).catch(err => {
+            clone.remove();
+            hideLoader();
+            showToast('JPG Export Error: ' + err.message, 'error');
+          });
+        }, 250);
+      });
     }
 
     /* ========================================================================
@@ -1462,7 +1523,7 @@
     }
 
     /* ========================================================================
-       TAB 2: INDIVIDUAL CALENDAR, EXCHANGES, DIRECT BYPASS & CANCEL/REVERT
+       TAB 2: INDIVIDUAL CALENDAR, DIRECT AUTHORITY BYPASSES & CANCEL/REVERT
        ======================================================================== */
     function renderCalendarOpsView() {
       const container = document.getElementById('tabCalendarOps');
@@ -1479,27 +1540,53 @@
         .map(e => `<option value="${e.empId}">${e.name} (${e.designation})</option>`)
         .join('');
 
-      const authBypassCard = isAuthorityUser() ? `
-        <div class="glass-card" style="border:1.5px solid rgba(79,70,229,0.35);background:linear-gradient(135deg, rgba(79,70,229,0.08), rgba(14,165,233,0.08));">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-            <h3 style="font-size:14.5px;font-weight:800;color:var(--accent-indigo);">⚡ Direct Authority Exchange Bypass (Admin / Incharge / HoD)</h3>
-            <span class="glass-pill" style="color:var(--accent-indigo);">Instant Swap</span>
+      const authBypassCards = isAuthorityUser() ? `
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;">
+          <!-- Direct Exchange Bypass -->
+          <div class="glass-card" style="border:1.5px solid rgba(79,70,229,0.35);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+              <h3 style="font-size:14.5px;font-weight:800;color:var(--accent-indigo);">⚡ Direct Exchange Bypass</h3>
+              <span class="glass-pill" style="color:var(--accent-indigo);">Authority</span>
+            </div>
+            <p style="font-size:11.5px;color:var(--text-secondary);margin-bottom:10px;">
+              Swap Shift or Week-Off between any two officials directly without request.
+            </p>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <select id="dirSubType" class="glass-select">
+                <option value="SHIFT_EXCHANGE">Direct Shift Exchange (OT Ineligible)</option>
+                <option value="WO_EXCHANGE">Direct Week-Off Exchange (OT Eligible)</option>
+              </select>
+              <select id="dirDate" class="glass-select tabular">${dateOpts}</select>
+              <select id="dirEmp1" class="glass-select">${allCrewOpts}</select>
+              <select id="dirEmp2" class="glass-select">${allCrewOpts}</select>
+              <input type="text" id="dirRemarks" class="glass-input" placeholder="Remarks (Optional)" />
+              <button class="btn-glass btn-primary" onclick="submitDirectAuthorityExchange('dir')">Execute Direct Exchange</button>
+            </div>
           </div>
-          <p style="font-size:11.5px;color:var(--text-secondary);margin-bottom:10px;">
-            Directly swap Shift or Week-Off between any two crew members without an employee request or partner approval.
-          </p>
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:9px;">
-            <select id="dirSubType" class="glass-select">
-              <option value="SHIFT_EXCHANGE">Direct Shift Exchange (OT Ineligible)</option>
-              <option value="WO_EXCHANGE">Direct Week-Off Exchange (OT Eligible)</option>
-            </select>
-            <select id="dirDate" class="glass-select tabular">${dateOpts}</select>
-            <select id="dirEmp1" class="glass-select">${allCrewOpts}</select>
-            <select id="dirEmp2" class="glass-select">${allCrewOpts}</select>
-          </div>
-          <div style="display:flex;gap:9px;margin-top:9px;flex-wrap:wrap;">
-            <input type="text" id="dirRemarks" class="glass-input" style="flex:1;min-width:180px;" placeholder="Operational Reason / Order Ref (Optional)" />
-            <button class="btn-glass btn-primary" onclick="submitDirectAuthorityExchange('dir')">Execute Direct Exchange</button>
+
+          <!-- Direct Leave (L) / Tour (T) / General Duty (G) Bypass -->
+          <div class="glass-card" style="border:1.5px solid rgba(5,150,105,0.35);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+              <h3 style="font-size:14.5px;font-weight:800;color:var(--accent-emerald);">⚡ Direct Leave (L) / Tour (T) Bypass</h3>
+              <span class="glass-pill" style="color:var(--accent-emerald);">Authority</span>
+            </div>
+            <p style="font-size:11.5px;color:var(--text-secondary);margin-bottom:10px;">
+              Directly mark Leave (<code>L</code>), Tour/Training (<code>T</code>), or General Duty (<code>G</code>) and revert anytime in the registry below.
+            </p>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <select id="dirLvEmp" class="glass-select">${allCrewOpts}</select>
+              <select id="dirLvType" class="glass-select">
+                <option value="L">L — Leave (Generic)</option>
+                <option value="T">T — Tour / Training</option>
+                <option value="G">G — General Duty (0930–1730)</option>
+              </select>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <select id="dirLvFrom" class="glass-select tabular">${dateOpts}</select>
+                <select id="dirLvTo" class="glass-select tabular">${dateOpts}</select>
+              </div>
+              <input type="text" id="dirLvRemarks" class="glass-input" placeholder="Remarks / Order Ref (Optional)" />
+              <button class="btn-glass btn-emerald" onclick="submitDirectAuthorityLeave('dirLv')">Mark L / T / G Directly</button>
+            </div>
           </div>
         </div>
       ` : '';
@@ -1537,7 +1624,7 @@
           </div>
         </div>
 
-        ${authBypassCard}
+        ${authBypassCards}
 
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;">
           <div class="glass-card">
@@ -1564,6 +1651,7 @@
             </p>
             <div style="display:flex;flex-direction:column;gap:9px;">
               <select id="leaveSubType" class="glass-select">
+                <option value="L">L — Leave</option>
                 <option value="CL">CL — Casual Leave</option>
                 <option value="EL">EL — Earned Leave</option>
                 <option value="ML">ML — Medical Leave</option>
@@ -1665,7 +1753,7 @@
 
       openConfirmModal(
         'Confirm Direct Authority Exchange',
-        `Directly swap ${subType.replace('_', ' ')} between ${emp1.name} and ${emp2.name} on ${dateStr}? Roster updates immediately.`,
+        `Directly swap ${subType.replace('_', ' ')} between ${emp1.name} and ${emp2.name} on ${dateStr}?`,
         async () => {
           const res = await callApi({
             action: 'directAuthorityExchange',
@@ -1683,6 +1771,40 @@
             await loadBootstrap(STATE.selectedDate, false);
           } else {
             showToast((res && res.message) || 'Direct exchange failed.', 'error');
+          }
+        }
+      );
+    }
+
+    async function submitDirectAuthorityLeave(prefix) {
+      const empId = document.getElementById(`${prefix}Emp`).value;
+      const subType = document.getElementById(`${prefix}Type`).value;
+      const dateFrom = document.getElementById(`${prefix}From`).value;
+      const dateTo = document.getElementById(`${prefix}To`).value;
+      const remarks = document.getElementById(`${prefix}Remarks`).value.trim();
+
+      const emp = STATE.employees.find(e => e.empId === empId);
+
+      openConfirmModal(
+        `Mark Direct ${subType}`,
+        `Directly mark ${emp.name} as ${subType} from ${dateFrom} to ${dateTo}? You can revert this anytime from the registry.`,
+        async () => {
+          const res = await callApi({
+            action: 'directAuthorityLeave',
+            actorRole: STATE.user.role,
+            actorName: STATE.user.name,
+            empId,
+            subType,
+            dateFrom,
+            dateTo,
+            remarks
+          }, `Marking ${subType} in Roster...`);
+          if (res && res.success) {
+            ALLOC_CACHE = {};
+            showToast(res.message, 'success');
+            await loadBootstrap(STATE.selectedDate, false);
+          } else {
+            showToast((res && res.message) || 'Failed to mark leave/tour.', 'error');
           }
         }
       );
@@ -1746,7 +1868,7 @@
     }
 
     async function handleCancelAndRevert(reqId) {
-      openConfirmModal('Cancel & Revert Roster', `Cancel approved request ${reqId} and automatically restore original shift duties in the Roster?`, async () => {
+      openConfirmModal('Cancel & Revert Roster', `Cancel approved entry ${reqId} and automatically restore original shift duties in the Roster?`, async () => {
         const res = await callApi({
           action: 'cancelRequest',
           reqId,
@@ -1763,7 +1885,7 @@
     }
 
     /* ========================================================================
-       TAB 4: ADMIN, INCHARGE & HOD COMMAND ANALYTICS + DIRECT EXCHANGE PANEL
+       TAB 4: ADMIN, INCHARGE & HOD COMMAND ANALYTICS + DIRECT BYPASSES
        ======================================================================== */
     function renderCommandAdminView() {
       const container = document.getElementById('tabCommandAdmin');
@@ -1785,24 +1907,41 @@
           ${buildRingKpi('Off / On Leave', `${tc.O + tc.LEAVE}`, Math.min(100, Math.round(((tc.O + tc.LEAVE) / 29) * 100)), '#059669')}
         </div>
 
-        <!-- DIRECT AUTHORITY EXCHANGE BYPASS IN COMMAND CONSOLE -->
-        <div class="glass-card" style="border:1.5px solid rgba(79,70,229,0.35);">
-          <h3 style="font-size:14.5px;font-weight:800;margin-bottom:4px;color:var(--accent-indigo);">⚡ Direct Shift / Week-Off Exchange (Authority Bypass)</h3>
-          <p style="font-size:11.5px;color:var(--text-secondary);margin-bottom:10px;">
-            Execute an instant Shift or Week-Off swap between any two fire officials without employee request.
-          </p>
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:8px;">
-            <select id="cmdDirSubType" class="glass-select">
-              <option value="SHIFT_EXCHANGE">Shift Exchange (OT Ineligible)</option>
-              <option value="WO_EXCHANGE">Week-Off Exchange (OT Eligible)</option>
-            </select>
-            <select id="cmdDirDate" class="glass-select tabular">${dateOpts}</select>
-            <select id="cmdDirEmp1" class="glass-select">${allCrewOpts}</select>
-            <select id="cmdDirEmp2" class="glass-select">${allCrewOpts}</select>
+        <!-- DIRECT AUTHORITY BYPASSES (EXCHANGE + LEAVE/TOUR) -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;">
+          <div class="glass-card" style="border:1.5px solid rgba(79,70,229,0.35);">
+            <h3 style="font-size:14.5px;font-weight:800;margin-bottom:4px;color:var(--accent-indigo);">⚡ Direct Shift / Week-Off Exchange</h3>
+            <p style="font-size:11.5px;color:var(--text-secondary);margin-bottom:10px;">Instant swap between any two fire officials.</p>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <select id="cmdDirSubType" class="glass-select">
+                <option value="SHIFT_EXCHANGE">Shift Exchange (OT Ineligible)</option>
+                <option value="WO_EXCHANGE">Week-Off Exchange (OT Eligible)</option>
+              </select>
+              <select id="cmdDirDate" class="glass-select tabular">${dateOpts}</select>
+              <select id="cmdDirEmp1" class="glass-select">${allCrewOpts}</select>
+              <select id="cmdDirEmp2" class="glass-select">${allCrewOpts}</select>
+              <input type="text" id="cmdDirRemarks" class="glass-input" placeholder="Remarks (Optional)" />
+              <button class="btn-glass btn-primary" onclick="submitDirectAuthorityExchange('cmdDir')">Execute Direct Swap</button>
+            </div>
           </div>
-          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
-            <input type="text" id="cmdDirRemarks" class="glass-input" style="flex:1;min-width:180px;" placeholder="Remarks / Order Ref (Optional)" />
-            <button class="btn-glass btn-primary" onclick="submitDirectAuthorityExchange('cmdDir')">Execute Direct Swap</button>
+
+          <div class="glass-card" style="border:1.5px solid rgba(5,150,105,0.35);">
+            <h3 style="font-size:14.5px;font-weight:800;margin-bottom:4px;color:var(--accent-emerald);">⚡ Direct Leave (L) / Tour (T) / GD (G)</h3>
+            <p style="font-size:11.5px;color:var(--text-secondary);margin-bottom:10px;">Mark Leave, Training/Tour, or GD directly & revert anytime.</p>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <select id="cmdLvEmp" class="glass-select">${allCrewOpts}</select>
+              <select id="cmdLvType" class="glass-select">
+                <option value="L">L — Leave (Generic)</option>
+                <option value="T">T — Tour / Training</option>
+                <option value="G">G — General Duty (0930–1730)</option>
+              </select>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <select id="cmdLvFrom" class="glass-select tabular">${dateOpts}</select>
+                <select id="cmdLvTo" class="glass-select tabular">${dateOpts}</select>
+              </div>
+              <input type="text" id="cmdLvRemarks" class="glass-input" placeholder="Remarks (Optional)" />
+              <button class="btn-glass btn-emerald" onclick="submitDirectAuthorityLeave('cmdLv')">Mark L / T / G Directly</button>
+            </div>
           </div>
         </div>
 
@@ -1938,4 +2077,3 @@
   </script>
 </body>
 </html>
-  
